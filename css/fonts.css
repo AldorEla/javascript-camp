@@ -1,0 +1,29 @@
+/**
+ * Import Fonts
+ */
+/* CentraleSansxBold */
+@font-face {
+  	font-family: 'CentraleSansxBold';
+  	src: url('../fonts/centralesansxbold/centralesansxbold.eot'); /* IE9 Compat Modes */
+  	src: url('../fonts/centralesansxbold/centralesansxbold.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
+       	url('../fonts/centralesansxbold/centralesansxbold.woff') format('woff'), /* Pretty Modern Browsers */
+       	url('../fonts/centralesansxbold/centralesansxbold.ttf')  format('truetype'), /* Safari, Android, iOS */
+       	url('../fonts/centralesansxbold/centralesansxbold.svg#svgFontName') format('svg'); /* Legacy iOS */
+}
+/* CentraleSansLight */
+@font-face {
+  	font-family: 'CentraleSansLight';
+  	src: url('../fonts/centralesanslight/centralesanslight.eot'); /* IE9 Compat Modes */
+  	src: url('../fonts/centralesanslight/centralesanslight.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
+       	url('../fonts/centralesanslight/centralesanslight.woff') format('woff'), /* Pretty Modern Browsers */
+       	url('../fonts/centralesanslight/centralesanslight.ttf')  format('truetype'), /* Safari, Android, iOS */
+       	url('../fonts/centralesanslight/centralesanslight.svg#svgFontName') format('svg'); /* Legacy iOS */
+}
+@font-face {
+  	font-family: 'CentraleSansRegular';
+  	src: url('../fonts/centralesansregular/centralesansregular.eot'); /* IE9 Compat Modes */
+  	src: url('../fonts/centralesansregular/centralesansregular.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
+       	url('../fonts/centralesansregular/centralesansregular.woff') format('woff'), /* Pretty Modern Browsers */
+       	url('../fonts/centralesansregular/centralesansregular.ttf')  format('truetype'), /* Safari, Android, iOS */
+       	url('../fonts/centralesansregular/centralesansregular.svg#svgFontName') format('svg'); /* Legacy iOS */
+}

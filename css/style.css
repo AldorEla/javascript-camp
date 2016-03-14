@@ -1,0 +1,143 @@
+/** 
+ * Script: /css/style.css
+ * Author: Elena Alexie
+ * Description: Main style rules
+ */
+
+/**
+ * Import CSS Files
+ */
+@import url("fonts.css");
+/* [END] Import CSS Files */
+
+/**
+ * General Reset Rules
+ */
+* {
+	margin: 0;
+	padding: 0;
+}
+a, a:hover, a:active, a:visited {
+	outline: medium none;
+	text-decoration: none
+}
+.clearfix {
+	clear: both;
+	float: none;
+	display: block;
+	width: 100%;
+}
+.position-relative {
+	position: relative;
+}
+/* [END] General Reset Rules */
+
+/**
+ * General Rules
+ */
+body {
+	font-size: 14px!important; /* Base font-size for rem conversion */
+	width: 100%;
+}
+/* [END] General Rules*/
+
+/**
+ * Layout Rules
+ */
+.no-margin {
+	margin: 0!important;
+}
+.no-padding {
+	padding: 0!important;
+}
+/* [END] Layout Rules*/
+
+/**
+ * AquaTec Wet & Dry section
+ */
+.video-holder video { 
+    width: 100%;
+    height: 100%;
+    z-index: -100;
+ 	background: url('../images/S7000/bg-section6.jpg') center center no-repeat;
+  	background-size: cover;
+  	transition: 1s opacity;
+}
+section.module {
+	min-width: 100%;
+    min-height: 100%;
+    width: auto;
+    height: auto;
+	background-size: cover;
+	z-index: -100;
+}
+section.module.paralax {
+	background-repeat: no-repeat;
+	background-attachment: fixed;
+	background-size: cover;
+}
+section.module.bg-controls {
+	background-image: url('../images/header2.jpg');
+	height: 600px;
+}
+.description {
+  	padding-top: 100px;
+  	padding-bottom: 100px;
+	margin-top: 5rem;
+  	color: white;
+}
+.description p {
+	line-height: 2.75rem;
+  	font-size: 2rem;
+	font-weight: 400;
+	font-family: "CentraleSansLight";
+  	text-shadow: 1px 1px 2px rgba(0, 0, 0, 1);
+}
+#aquatec .description {
+  	position: absolute;
+  	top: 0;
+  	left: 0;
+  	z-inde: 1;
+}
+.description h1 {
+	font-family: "CentraleSansxBold";
+	font-size: 6.5rem;
+	line-height: 6.5rem;
+	margin-bottom: 0.5rem;
+}
+.bg-controls .description {
+	color: #19203C;
+}
+.bg-controls .description p {
+	text-shadow: 1px 1px 2px rgba(150, 150, 150, 1);
+}
+.description h2 {
+	font-family: "CentraleSansLight";
+	font-size: 4rem;
+	line-height: 4rem;
+	font-weight: 400;
+}
+/* [END] Video Holder Rules */
+
+/* @screen-xs-max: <768px; */
+@media (max-width: 767px) {
+	.description {
+		padding-top: 20px;
+	}
+	.description p {
+		margin-top: 1rem;
+		font-size: 1.5rem;
+		line-height: 1.75rem;
+	}
+	.description h1 {
+		font-size: 3.5rem;
+		line-height: 3.5rem;
+	}
+	.description h2 {
+		font-size: 2.5rem;
+		line-height: 2.5rem;
+	}
+}
+@media (min-width: @screen-sm-min) and (max-width: @screen-sm-max) { ... }
+@media (min-width: @screen-md-min) and (max-width: @screen-md-max) { ... }
+@media (min-width: @screen-lg-min) { ... }
