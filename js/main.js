@@ -44,18 +44,10 @@ function verticallyPositionTextBox() {
 function playPauseVideo() {
 	$('.js-play-video').on('click', function() {
 		var video = $('#'+$(this).data('video'));
-		alert(video);
-	    if(!video.is(':visible')){
-	        video[0].pause();
-	        video.fadeOut('normal', function(){
-	            video.fadeIn('normal', function(){
-	                video[0].play();
-	            });
-	        });
-	    }else{
-	        video[0].play();
-	    }
-	}, function(){
+	    video[0].play();
+	});
+	$('.js-pause-video').on('click', function() {
+		var video = $('#'+$(this).data('video'));
 	    video[0].pause();
 	});
 }

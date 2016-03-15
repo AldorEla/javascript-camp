@@ -17,9 +17,10 @@
 	margin: 0;
 	padding: 0;
 }
-a, a:hover, a:active, a:visited {
+a, a:hover, a:active, a:visited, a:focus {
 	outline: medium none;
 	text-decoration: none;
+	border: none;
 	cursor: pointer;
 }
 .clearfix {
@@ -71,16 +72,20 @@ section.module {
     min-height: 100%;
     width: auto;
     height: auto;
-	z-index: -100;
+	z-index: 0;
+}
+section.module.bg-controls {
+	background: url('../images/lightblue_background.jpg') no-repeat center center fixed;
 }
 section.module.parallax {
 	background-repeat: no-repeat;
 	background-attachment: fixed;
+	-webkit-background-size: cover;
+	-moz-background-size: cover;
+	-o-background-size: cover;
 	background-size: cover;
+	background-clip: border-box;
 	min-height: auto;
-}
-section.module.bg-controls {
-	background-image: url('../images/lightblue_background.jpg');
 }
 .description {
 	padding-top: 5rem;
@@ -106,8 +111,8 @@ section.module.bg-controls {
 }
 .description h1 {
 	font-family: "CentraleSansxBold";
-	font-size: 6.5rem;
-	line-height: 6.5rem;
+	font-size: 6.25rem;
+	line-height: 6.25rem;
 	font-size: 6vw;
 	line-height: 6vh;
 	padding-bottom: 0.5rem;
@@ -131,6 +136,28 @@ section.module.bg-controls {
 	width: 100%;
 	margin: 20px 0;
 	vertical-align: middle;
+}
+.icon-pause-video,
+.icon-play-video {
+	font-size: 5vh;
+	display: inline-block;
+	padding: 5px 15px;
+	font-weight: 900;
+	color: #333;
+	background: #dfdfdf;
+	-moz-border-radius: 3px;
+	-webkit-border-radius: 3px;
+	-o-border-radius: 3px;
+	border-radius: 3px;
+}
+.icon-pause-video:hover,
+.icon-pause-video:active,
+.icon-pause-video:focus,
+.icon-play-video:hover,
+.icon-play-video:active ,
+.icon-play-video:focus {
+	color: #ddd;
+	background: #333;
 }
 /* [END] Video Holder Rules */
 
