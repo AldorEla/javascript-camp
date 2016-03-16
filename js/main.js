@@ -147,7 +147,7 @@ function sectionScroll() {
 // });
 
 jQuery(document).ready(function() {
-	jQuery('.static').addClass("bt_hidden").viewportChecker({
+	jQuery('.module').addClass("bt_hidden").viewportChecker({
 		classToAdd: 'bt_visible animated fadeIn', 
 		offset: 100, 
 		repeat: false, 
