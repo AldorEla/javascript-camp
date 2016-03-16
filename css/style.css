@@ -171,7 +171,7 @@ section.module.parallax {
 .icon-play-video:active ,
 .icon-play-video:focus,
 .icon-play-video.current-status {
-	color: red;
+	color: #960000;
 }
 .media-holder {
 	width: 100%;
