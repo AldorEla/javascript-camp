@@ -1,10 +1,16 @@
-$(document).ready(function() {
+$(document).ready(function(evt) {
 	verticallyPositionTextBox();
 
 	playPauseVideo();
 
 	// Known bug: Fix vh font-size on window resize
 	// causeRepaintsOn = $("h1, h2, h3, p");
+
+	$('section.parallax').on('mouseenter', '#controls', function() {
+		$(this).on('scroll', function(evt) {
+			console.log('I am listening!');
+		})
+	});
 });
 
 $(window).on('resize', function() {
@@ -25,18 +31,19 @@ function verticallyPositionTextBox() {
 		
 		if(box.find('ing').length) {
 			box.find('ing').load(function() {
-				var intVal = Math.round(parseInt(sectionHeight - boxHeight) / 2);
-				if(intVal >= 0) {
-					spaceTop = intVal + 'px';
-				}
+				setSpaceTop();
 			});
 		} else {
+			setSpaceTop();
+		}
+		box.css('padding-top', spaceTop);
+
+		function setSpaceTop() {
 			var intVal = Math.round(parseInt(sectionHeight - boxHeight) / 2);
 			if(intVal >= 0) {
 				spaceTop = intVal + 'px';
 			}
 		}
-		box.css('padding-top', spaceTop);
 	});
 
 }
@@ -50,4 +57,14 @@ function playPauseVideo() {
 		var video = $('#'+$(this).data('video'));
 	    video[0].pause();
 	});
+	$('video').on('hover', function() {
+		alert($(this));
+		console.log($(this));
+		var paused = $(this).get(0).paused;
+		if(paused) {
+			$(this)[0].play();
+		} else {
+			$(this)[0].pause();
+		}
+	})
 }
