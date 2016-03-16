@@ -6,13 +6,14 @@
         <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no">
         <title>Philips Shaver</title>
         <link rel="stylesheet" href="vendor/bootstrap/css/bootstrap.min.css">
+        <link rel="stylesheet" href="vendor/font-awesome/css/font-awesome.min.css">
         <link rel="stylesheet" href="css/style.css">
     </head>
     <body>
         <main class="container-fluid">
             <section id="aquatec" class="module row position-relative">
                 <div class="video-holder">
-                    <video class="media" id="splash" tabindex="0" preload="" autoplay="" loop="">
+                    <video class="media" id="splash" autoplay="" loop="">
                         <source src="video/splash.webm" type="video/webm">
                         <source type="video/mp4; codecs=avc1.42E01E, mp4a.40.2;" src="video/splash.mp4">
                     </video>
@@ -27,10 +28,10 @@
                     </div>
                     <div class="player-buttons col-md-2 col-sm-2 col-xs-2 pull-right">
                         <a class="js-pause-video icon-pause-video" href="javascript:void(0)" data-video="splash">
-                            ||
+                            <i class="fa fa-pause fa-lg"></i>
                         </a>
-                        <a class="js-play-video icon-play-video" href="javascript:void(0)" data-video="splash">
-                            >
+                        <a class="js-play-video icon-play-video current-status" href="javascript:void(0)" data-video="splash">
+                            <i class="fa fa-play fa-lg"></i>
                         </a>
                     </div>
                 </div>
@@ -47,19 +48,36 @@
                     <img src="images/shaver/shaver-S7000.png">
                 </div>
             </section>
-            <section id="shaverSeries" class="module row position-relative">
-                <div class="video-holder">
-                    <video class="media" id="" tabindex="0" preload="" autoplay="" loop="">
-                        <source src="video/splash.webm" type="video/webm">
-                        <source type="video/mp4; codecs=avc1.42E01E, mp4a.40.2;" src="video/splash.mp4">
-                    </video>
+            <section id="shaverSeries" class="module row position-relative" data-grid-template="box">
+                <div class="col-xs-12 col-sm-8 no-padding wide">
+                    <div class="video-holder">
+                        <video class="media" id="smallVideo" loop="">
+                            <source src="video/video_image_gallery.mp4" type="video/webm">
+                            <source type="video/mp4; codecs=avc1.42E01E, mp4a.40.2;" src="video/video_image_gallery.mp4">
+                        </video>
+                    </div>
                 </div>
-                <div class="description js-box col-md-offset-1 col-md-4 col-sm-offset-1 col-sm-6 col-xs-6 col-xs-offset-1">
-                    <h2>Introducing</h2>
-                    <h1>Shaving Series</h1>
-                    <p class="js-paragraph" data-parent-id="shaverSeries">
-                        The user interface shows you the functionalities of your shaver
-                    </p>
+                <div class="description">
+                    <div class="js-box col-md-offset-1 col-md-6 col-sm-offset-1 col-sm-6 col-xs-6 col-xs-offset-1">
+                        <h2>Introducing</h2>
+                        <h1>Shaver Series S7000</h1>
+                    </div>
+                    <div class="player-buttons col-md-2 col-sm-2 col-xs-2 pull-right">
+                        <a class="js-pause-video icon-pause-video" href="javascript:void(0)" data-video="smallVideo">
+                            <i class="fa fa-pause fa-lg"></i>
+                        </a>
+                        <a class="js-play-video icon-play-video current-status" href="javascript:void(0)" data-video="smallVideo">
+                            <i class="fa fa-play fa-lg"></i>
+                        </a>
+                    </div>
+                </div>
+                <div class="col-xs-12 col-sm-4 no-padding">
+                    <div class="small">
+                        <img src="images/S7000/shaver-2.png" alt="Shaver S7000">
+                    </div>
+                    <div class="small">
+                        <img src="images/S7000/shaver-3.png" alt="Shaver S7000">
+                    </div>
                 </div>
             </section>
         </main>

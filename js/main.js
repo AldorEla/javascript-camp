@@ -1,23 +1,18 @@
 $(document).ready(function(evt) {
 	verticallyPositionTextBox();
+	setBoxesGrid();
 
 	playPauseVideo();
-
-	// Known bug: Fix vh font-size on window resize
-	// causeRepaintsOn = $("h1, h2, h3, p");
-
-	$('section.parallax').on('mouseenter', '#controls', function() {
-		$(this).on('scroll', function(evt) {
-			console.log('I am listening!');
-		})
-	});
 });
 
 $(window).on('resize', function() {
-  	// causeRepaintsOn.css("z-index", 1);
-
-  	// Known bug: Fix vh font-size on window resize
 	verticallyPositionTextBox();
+	setBoxesGrid();
+});
+
+$(window).on('load', function() {
+	verticallyPositionTextBox();
+	setBoxesGrid();
 });
 
 function verticallyPositionTextBox() {
@@ -49,22 +44,52 @@ function verticallyPositionTextBox() {
 }
 
 function playPauseVideo() {
-	$('.js-play-video').on('click', function() {
+	$('.js-play-video').on('click', function(e) {
+		e.preventDefault();
 		var video = $('#'+$(this).data('video'));
-	    video[0].play();
-	});
-	$('.js-pause-video').on('click', function() {
-		var video = $('#'+$(this).data('video'));
-	    video[0].pause();
-	});
-	$('video').on('hover', function() {
-		alert($(this));
-		console.log($(this));
-		var paused = $(this).get(0).paused;
-		if(paused) {
-			$(this)[0].play();
-		} else {
-			$(this)[0].pause();
+
+		// Remove the current-status and set the class for clicked button
+		if(!$(this).hasClass('current-status')) {
+			$(this).closest('.player-buttons').find('.current-status').removeClass('current-status');
+			$(this).addClass('current-status');
+
+	    	video[0].play();
 		}
-	})
+	});
+	$('.js-pause-video').on('click', function(e) {
+		e.preventDefault();
+		var video = $('#'+$(this).data('video'));
+
+		// Remove the current-status and set the class for clicked button
+		if(!$(this).hasClass('current-status')) {
+			$(this).closest('.player-buttons').find('.current-status').removeClass('current-status');
+			$(this).addClass('current-status');
+			
+	    	video[0].pause();
+		}
+	});
+}
+
+function setBoxesGrid() {
+	var gridContainer 		= $('section[data-grid-template="box"]');
+	var wide          		= gridContainer.find('.wide');
+	var small 	      		= gridContainer.find('.small');
+	var wideHeight   	 	= wide.height();
+	var newSmallHeight 		= Math.round(wideHeight / 2);
+
+	$(small).each(function() {
+		$(this).css('height', newSmallHeight+'px');
+		$(this).css('overflow', 'hidden');
+		$(this).find('img').width('100%');
+	});
+
+	if($(window).width() <= 767) {
+		resetInlineStyle(small);
+	}
+}
+
+function resetInlineStyle(elem) {
+	if(elem.length) {
+		elem.removeAttr('style');
+	}
 }
