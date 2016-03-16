@@ -153,7 +153,7 @@ section.module.parallax {
 }
 .icon-pause-video,
 .icon-play-video {
-	font-size: 3vh;
+	font-size: 2rem;
 	color: #ddd;
 	display: inline-block;
 	margin: 5px 10px;
@@ -201,6 +201,9 @@ section.module.parallax {
 	.description h2 {
 		font-size: 2.5rem;
 		line-height: 2.5rem;
+	}
+	#shaverSeries .description {
+		width: 100%;
 	}
 }
 
