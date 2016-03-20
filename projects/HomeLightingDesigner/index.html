@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Home Lighting Designer</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<!-- Include assets: CSS -->
+	<link rel="stylesheet" href="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.css">
+	<link rel="stylesheet" href="vendor/font-awesome/css/font-awesome.min.css">
+	<link rel="stylesheet" type="text/css" href="css/main.css">
+</head>
+<body data-role="page">
+	<main data-role="main position-relative">
+		<div class="gallery-container">
+			<section class="gallery-preview-container position-relative">
+				<div class="gallery-preview-text">
+					<div class="content-box">jQuery Slider with Carousel</div>
+				</div>
+				<div class="swipe"></div>
+				<a class="preview-control-arrow prev" href="javascript: void(0);" title="Go to the Previous image" role="slider-navigation"><i class="fa fa-chevron-circle-left fa-lg"></i></a>
+				<section class="gallery-preview">
+					<img id="image-1" class="image-shown" src="images/gallery/slide-image-1.jpg" alt="Image: Slide Image 1">
+					<img id="image-2" class="image-hidden" src="images/gallery/slide-image-2.jpg" alt="Image: Slide Image 2">
+					<img id="image-3" class="image-hidden" src="images/gallery/slide-image-3.jpg" alt="Image: Slide Image 3">
+					<img id="image-4" class="image-hidden" src="images/gallery/slide-image-4.jpg" alt="Image: Slide Image 4">
+					<img id="image-5" class="image-hidden" src="images/gallery/slide-image-5.jpg" alt="Image: Slide Image 5">
+				</section>
+				<a class="preview-control-arrow next" href="javascript: void(0);" title="Go to the Next image" role="slider-navigation"><i class="fa fa-chevron-circle-right fa-lg"></i></a>
+				<div class="clearfix"></div>
+			</section>
+			<section class="gallery-thumbnail-container">
+				<div class="position-relative">
+					<a class="thumbnail-control-arrow thumbnail-prev disabled" href="javascript: void(0);" title="Go to the Previous thumbnail" role="thumbnails-navigation"><i class="fa fa-chevron-circle-left fa-lg fa-inverse"></i></a>
+					<div class="gallery-thumbnail">
+						<ul class="gallery-thumbnail-list">
+							<li class="thumbnail current" data-preview-image="image-1">
+								<img src="images/gallery/thumbnail/slide-image-1.jpg" alt="Image: Slide Image 1" width="100" height="60">
+							</li>
+							<li class="thumbnail" data-preview-image="image-2">
+								<img src="images/gallery/thumbnail/slide-image-2.jpg" alt="Image: Slide Image 2" width="100" height="60">
+							</li>
+							<li class="thumbnail" data-preview-image="image-3">
+								<img src="images/gallery/thumbnail/slide-image-3.jpg" alt="Image: Slide Image 3" width="100" height="60">
+							</li>
+							<li class="thumbnail" data-preview-image="image-4">
+								<img src="images/gallery/thumbnail/slide-image-4.jpg" alt="Image: Slide Image 4" width="100" height="60">
+							</li>
+							<li class="thumbnail" data-preview-image="image-5">
+								<img src="images/gallery/thumbnail/slide-image-5.jpg" alt="Image: Slide Image 5" width="100" height="60">
+							</li>
+						</ul>
+					</div>
+					<a class="thumbnail-control-arrow thumbnail-next" href="javascript: void(0);" title="Go to the Next thumbnail" role="thumbnails-navigation"><i class="fa fa-chevron-circle-right fa-lg fa-inverse"></i></a>
+					<div class="clearfix"></div>
+				</div>
+			</section>
+		</div>
+	</main>
+	<!-- Include assets: JavaScript -->
+	<script src="js/jQuery/jquery-2.2.2.min.js"></script>
+	<script src="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>
+	<script src="js/custom/main.js"></script>
+</body>
+</html>

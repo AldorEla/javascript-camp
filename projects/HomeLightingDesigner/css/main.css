@@ -1,0 +1,206 @@
+/** 
+ * Script: /css/main.css
+ * Author: Elena Alexie
+ * Description: Main style rules
+ */
+
+/**
+ * Import Fonts
+ */
+@import url("http://fonts.googleapis.com/css?family=PT+Sans");
+
+/* [END] Import Fonts */
+
+/**
+ * General Reset Rules
+ */
+*, h1, h2, p, ul, body {
+	margin: 0;
+	padding: 0;
+}
+a, a:hover, a:active, a:visited, a:focus {
+	outline: medium none;
+	text-decoration: none;
+	border: none;
+	cursor: pointer;
+}
+.clearfix {
+	clear: both;
+	float: none;
+	display: block;
+	width: 100%;
+}
+.position-relative {
+	position: relative;
+}
+/* [END] General Reset Rules */
+
+/**
+ * General Rules
+ */
+body {
+	font-size: 14px; /* Base font-size for rem conversion */
+	width: 100%;
+	font-family: "PT Sans";
+	text-align: center;
+}
+main {
+	width: 100%;
+	margin: 0 auto;
+	padding: 0;
+}
+/* [END] General Rules*/
+
+/**
+ * Layout Rules
+ */
+.no-margin {
+	margin: 0!important;
+}
+.no-padding {
+	padding: 0!important;
+}
+/* [END] Layout Rules*/
+
+/**
+ * Carousel Slider Rules
+ */
+.gallery-container {
+	width: 100%;
+	transition: all 0.5s ease;
+}
+body:hover .gallery-thumbnail-container {
+	opacity: 1;
+}
+.gallery-preview {
+	width: 100%;
+	position: relative;
+	float: left;
+	overflow: hidden;
+	text-align: center;
+	background: #333;
+}
+.gallery-preview-text {
+	width: 40%;
+	position: absolute;
+	z-index: 100;
+	top: 50px;
+	left: 50px;
+}
+.swipe {
+	width: 100%;
+	height: 100%;
+	position: absolute;
+	z-index: 99;
+}
+.gallery-preview-text .content-box {
+	padding: 1vh;
+	width: 100%;
+	background: rgba(0, 0, 0, 0.35);
+	color: #fff;
+	font-size: 1vw;
+}
+.gallery-preview img {
+	width: 100%;
+	vertical-align: middle;
+}
+.gallery-preview .image-shown {
+	display: inline-block;
+	opacity: 1;
+}
+.gallery-preview .image-hidden {
+	display: none;
+	opacity: 0.5;
+}
+.gallery-preview-container .preview-control-arrow {
+	font-size: 2vw;
+	color: #333;
+	display: block;
+	position: absolute;
+	z-index: 100;
+	margin-top: calc(50%/2);
+	transition: all 0.5s ease;
+	opacity: .5;
+}
+.gallery-preview-container .preview-control-arrow:hover {
+	color: #960000;
+	opacity: 1;
+}
+.gallery-preview-container .preview-control-arrow.prev {
+	left: 20px;
+}
+.gallery-preview-container .preview-control-arrow.next {
+	right: 20px;
+}
+/* [END] Carousel Slider Rules */
+
+/**
+ * Carousel Thumbnails Rules
+ */
+.gallery-thumbnail-container {
+	width: 100%;
+	padding: 10px 0;
+	background: #333;
+	bottom: 0;
+	opacity: 0;
+	z-index: 100;
+	position: fixed;
+}
+.gallery-thumbnail-container .thumbnail-prev,
+.gallery-thumbnail-container .thumbnail-next {
+	display: block;
+	position: absolute;
+	top: 0;
+	z-index: 100;
+}
+.gallery-thumbnail-container .thumbnail-prev {
+	left: 20px;
+}
+.gallery-thumbnail-container .thumbnail-next {
+	right: 20px;
+}
+.gallery-thumbnail {
+	width: 100%;
+	margin: 0 auto;
+	padding: 0;
+	position: relative;
+	float: left;
+	overflow: hidden;
+	text-align: center;
+	font-size: 1vw;
+}
+.gallery-thumbnail img {
+	vertical-align: middle;
+}
+.gallery-thumbnail-list {
+	margin: 0;
+	padding: 0;
+	width: 100%;
+}
+.gallery-thumbnail-list li {
+	display: inline-block;
+}
+.thumbnail {
+	cursor: pointer;
+	transition: all 0.5s ease;
+	position: relative;
+}
+.thumbnail:after {
+	content: '\A';
+    position: absolute;
+    width: 100%; 
+    height: 100%;
+    top: 0; 
+    left: 0;
+    background: rgba(0, 0, 0, 0.6);
+    opacity: 1;
+    transition: all 0.5s;
+    -webkit-transition: all 0.5s;
+}
+.thumbnail:hover:after {
+    opacity: 0;
+}
+.thumbnail.current:after {
+	opacity: 0;
+}
+/* [END] Carousel Thumbnails Rules */
