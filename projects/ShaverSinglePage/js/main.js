@@ -13,7 +13,7 @@ $(window).on('resize', function() {
 });
 
 $(window).on('load', function() {
-	sectionScroll();
+	// sectionScroll();
 	verticallyPositionTextBox();
 	setBoxesGrid();
 });
@@ -112,46 +112,22 @@ function sectionScroll() {
 	
 	controlsScroll.css({ 'height': firstSectionHeight + 'px', 'overflow': 'auto'});
 
-	controlsScroll.on('scroll', function() {
-		// jQuery(document).ready(function() {
-		// 	jQuery('.static').addClass("bt_hidden").viewportChecker({
-		// 		classToAdd: 'bt_visible animated bounceInLeft', 
-		// 		offset: 100, 
-		// 		repeat: true, 
-		// 		callbackFunction: function(elem, action){},
-		// 		scrollHorizontal: false 
-		// 	});
-		// });
+	var lastScrollTop = 0;
+	controlsScroll.on('scroll', function(e) {
+		$.each( $('.static'), function( i, val ) {
+			i = i + 1;
+			console.log(i);
+			console.log(val);
+	    	var elemTop = $('#controls'+i).offset().top;
+		    var elemBottom = elemTop + $('#controls'+i).height();
+		    
+	    	var result = ((elemBottom <= (controlsScroll.height() + controlsScroll.offset().top)) && (elemTop >= controlsScroll.offset().top));
+		    $('#controls'+i).removeClass('intoView');
+		    if(result == true) {
+		    	$('#controls'+i).addClass('intoView');
+		    	console.log($('#controls'+i));
+			}
+		});
+		// $(this).off(e);
 	});
-
-	// var lastScrollTop = 0;
-	// controlsScroll.on('scroll', function() {
-	// 	st = $(this).scrollTop();
- //        if(st < lastScrollTop) {
- //            console.log('up 1');
- //            var scrollDirection = 'up';
- //        }
- //        else {
- //            console.log('down 1');
- //            var scrollDirection = 'down';
- //        }
- //        lastScrollTop = st;
-	// });
 }
-
-// $(document).ready(function() {
-//     $('.static').addClass("hide").viewportChecker({
-//         classToAdd: 'visible animated fadeIn',
-//         offset: 100
-//    });
-// });
-
-jQuery(document).ready(function() {
-	jQuery('.module').addClass("bt_hidden").viewportChecker({
-		classToAdd: 'bt_visible animated fadeIn', 
-		offset: 100, 
-		repeat: false, 
-		callbackFunction: function(elem, action){},
-		scrollHorizontal: false 
-	});
-});
