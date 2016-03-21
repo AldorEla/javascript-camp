@@ -69,9 +69,6 @@ main {
 	width: 100%;
 	transition: all 0.5s ease;
 }
-body:hover .gallery-thumbnail-container {
-	opacity: 1;
-}
 .gallery-preview {
 	width: 100%;
 	position: relative;
@@ -92,6 +89,11 @@ body:hover .gallery-thumbnail-container {
 	height: 100%;
 	position: absolute;
 	z-index: 99;
+	background: rgba(0,0,0,0.3);
+	transition: all 0.5s ease;
+}
+.swipe:hover {
+	opacity: 0;
 }
 .gallery-preview-text .content-box {
 	padding: 1vh;
@@ -137,14 +139,53 @@ body:hover .gallery-thumbnail-container {
 /**
  * Carousel Thumbnails Rules
  */
+.gallery-thumbnail-section {
+	width: 100%;
+	bottom: 0;
+	z-index: 101;
+	position: fixed;
+}
+.show-thumbnails {
+	width: 100%;
+	text-align: center;
+	border-bottom: 10px solid #333;
+	transition: all 0.5s ease;
+}
+.show-thumbnails .btn-show {
+	text-transform: uppercase;
+	display: inline-block;
+	padding: 10px 15px;
+	color: #fff;
+	font-size: 12px;
+	font-weight: 400;
+	background: #333;
+	border-top-left-radius: 5px;
+	border-top-right-radius: 5px;
+	cursor: pointer;
+	transition: all 0.5s ease;
+}
+.show-thumbnails:hover,
+.show-thumbnails.thumbnail-shown {
+	border-color: #111;
+}
+.show-thumbnails:hover .btn-show,
+.show-thumbnails .btn-show:hover,
+.show-thumbnails.thumbnail-shown .btn-show {
+	background: #111;
+}
+.show-thumbnails.thumbnail-shown:hover {
+	border-color: #222;
+}
+.show-thumbnails.thumbnail-shown:hover .btn-show,
+.show-thumbnails.thumbnail-shown .btn-show:hover {
+	background: #222;
+}
 .gallery-thumbnail-container {
+	display: none;
 	width: 100%;
 	padding: 10px 0;
 	background: #333;
-	bottom: 0;
-	opacity: 0;
-	z-index: 100;
-	position: fixed;
+	border-bottom: 10px solid #111;
 }
 .gallery-thumbnail-container .thumbnail-prev,
 .gallery-thumbnail-container .thumbnail-next {

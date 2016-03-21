@@ -9,10 +9,14 @@ $(document).ready(function() {
 	setSliderCarouselMaxHeight($('.gallery-preview > img'), $('.gallery-container .preview-control-arrow'));
 
 	/**
+	 * Show Thumbnails
+	 **/
+	showThumbnails();
+
+	/**
 	 * Initialize the Control Panel functions
 	 **/
 	controlPanel();
-
 });
 
 $(window).on('resize', function() {
@@ -52,7 +56,6 @@ function setSliderCarouselMaxHeight(carouselImgs, previewControlArrow) {
 		$(this).css('margin-top', topSpace);
 		
 		if($(this).width() > $(window).width()) {
-			alert('here');
 			var leftSpace = Math.round(parseInt($(this).width() - $(window).width())/2);
 			$(this).css('height', maxHeight);
 			$(this).css('width', 'auto');
@@ -83,7 +86,8 @@ function controlPanel() {
 	 **/
 	const shownClass  		= 'image-shown',
 	      hiddenClass 		= 'image-hidden',
-		  galleryPreviewImg = $('.gallery-preview > img');
+		  galleryPreviewImg = $('.gallery-preview > img'),
+		  effectStyle       = 'slideHorizontal';
 
 	/**
 	 * Init the Next Slider Navigation button
@@ -94,7 +98,7 @@ function controlPanel() {
 	 * @param: 4th - object, all img tags contained in the given carousel; In this call: $('.gallery-preview > img')
 	 * @param: 5th - boolean, slide the images with a fadeIn/fadeOut effect; In this call: true
 	 **/
-	initSliderNavigation($('.next, .prev'), shownClass, hiddenClass, galleryPreviewImg, 'fadeIn'); // Next button click event
+	initSliderNavigation($('.next, .prev'), shownClass, hiddenClass, galleryPreviewImg, effectStyle); // Next button click event
 
 	/**
 	 * Init Swipe Slider Navigation
@@ -104,7 +108,7 @@ function controlPanel() {
 	/**
 	 * Init Tumbnail Navigation
 	 **/
-	initThumbnailNavigation($('.thumbnail'), shownClass, hiddenClass, galleryPreviewImg, 'fadeIn');
+	initThumbnailNavigation($('.thumbnail'), shownClass, hiddenClass, galleryPreviewImg, effectStyle);
 
 
 	/** Function Definitions ***/
@@ -117,7 +121,7 @@ function controlPanel() {
 	 * @param: shown 		- string, represents the currently visible image; Can be: 'image-shown'
 	 * @param: hidden 		- string, represents the invisibility CSS class; Can be: 'image-hidden'
 	 * @param: carouselImgs - object, all img tags contained in the given carousel; Can be: $('.gallery-preview > img')
-	 * @param: effect 	    - boolean, slide the images with a fadeIn/fadeOut effect
+	 * @param: effect 	    - boolean, slide the images with a fadeIn/fadeOut effect is the default behaviour
 	 **/
 	function initSliderNavigation(button, shown, hidden, carouselImgs, effect) {
 		var button 		 = $(button),
@@ -131,7 +135,13 @@ function controlPanel() {
 			$('.next').addClass('disabled');
 		}
 
+		// Reset fadeIn Effect Style, if effect is slideHorizontal
+		resetFadeInEffectStyle(effect, carouselImgs, hidden);
+
 		button.on('click', function(e) {
+			// Reset fadeIn Effect Style, if effect is slideHorizontal
+			resetFadeInEffectStyle(effect, carouselImgs, hidden);
+
 			var button 			   = $(this),
 			    currentActiveImage = $('.'+shown);
 			
@@ -167,6 +177,9 @@ function controlPanel() {
 	function initThumbnailNavigation(thumbnail, shown, hidden, carouselImgs, effect) {
 		var thumbnail    = $(thumbnail),
 		    carouselImgs = $(carouselImgs);
+
+		// Reset fadeIn Effect Style, if effect is slideHorizontal
+		resetFadeInEffectStyle(effect, carouselImgs, hidden);
 		
 		thumbnail.on('click', function() {
 			var thumbnail 		   = $(this),
@@ -187,13 +200,15 @@ function controlPanel() {
 	 **/
 	function swipeLeftRight() {
 		$('.swipe').on('swipeleft', function(e) {
-			$('.next').trigger('click');
-
+			if(!$('.next').hasClass('disabled')) {
+				$('.next').trigger('click');
+			}
 			e.preventDefault();
 		});
 		$('.swipe').on('swiperight', function(e) {
-			$('.prev').trigger('click');
-
+			if(!$('.prev').hasClass('disabled')) {
+				$('.prev').trigger('click');
+			}
 			e.preventDefault();
 		});
 	}
@@ -210,25 +225,58 @@ function controlPanel() {
 	 * @param: effect 	    	  - boolean, slide the images with a fadeIn/fadeOut effect
 	 **/
 	function setRelatedPreview(button, currentActiveImage, nextActiveImage, carouselImgs, shown, hidden, effect) {
+		// effect = 'fadeIn';
 		if(effect == 'fadeIn') {
 			currentActiveImage.animate({
 			  	opacity: 0.5
-			}, {
-				duration: "slow",
-			}).removeClass(shown).addClass(hidden).css({'z-index': -10});
+			}, 500).removeClass(shown).addClass(hidden).css({'z-index': -10});
 
 			nextActiveImage.animate({
 			  	opacity: 1
-			}, {
-				duration: "slow"
-			}).addClass(shown).removeClass(hidden).css({'z-index': 20});
+			}, 500).addClass(shown).removeClass(hidden).css({'z-index': 20});
 
 			carouselImgs.not([currentActiveImage,nextActiveImage]).css({'z-index': 1});
+		} else if(effect == 'slideHorizontal') {
+			var counter = 0;
+			if(button != false) {
+				// Method no. 1, when button != false
+				carouselImgs.each(function(i, v) {
+					if($(this).hasClass(shown)) {
+						if($(button).hasClass('next')) {
+							counter = i+1;
+						} else {
+							counter = i-1;
+						}
+
+						carouselImgs.css('margin-left', 0);
+						carouselImgs.parent().animate({
+						  	marginLeft: '-'+currentActiveImage.outerWidth()*counter
+						}, 500);
+					}
+				});
+				currentActiveImage.removeClass(shown);
+				nextActiveImage.addClass(shown);
+			} else {
+				// Method no. 2, when button == false
+				currentActiveImage.removeClass(shown);
+				nextActiveImage.addClass(shown);
+				
+				counter = parseInt($('.'+shown).attr('id').match(/[0-9 -()+]+$/)[0])-1;
+				
+				carouselImgs.css('margin-left', 0);
+				carouselImgs.parent().animate({
+				  	marginLeft: '-'+$('.'+shown).outerWidth()*counter
+				}, 500);
+			}
 		} else {
 			currentActiveImage.removeClass(shown).addClass(hidden).css({'z-index': -10});
 			nextActiveImage.addClass(shown).removeClass(hidden).css({'z-index': 20});
 			carouselImgs.not([currentActiveImage,nextActiveImage]).css({'z-index': 1});
 		}
+
+		// $('.swipe').animate({
+		// 	opacity: 1
+		// }, 500);
 
 		if(button != false) {
 			$('.preview-control-arrow').removeClass('disabled');
@@ -268,4 +316,62 @@ function controlPanel() {
 			}
 		}
 	}
+
+	/**
+	 * Reset fadeIn Effect Style
+	 **/
+	function resetFadeInEffectStyle(effect, carouselImgs, hidden) {
+		var effect 		 = effect,
+		    carouselImgs = $(carouselImgs),
+		    hidden       = hidden;
+
+		if(effect == 'slideHorizontal') {
+			// Reset fadeIn Effect Style
+			carouselImgs.removeClass(hidden);
+			carouselImgs.parent().css({
+				'width': Math.round($(window).width()*carouselImgs.length)
+			});
+			var imageWidth = $(window).width();
+
+			carouselImgs.each(function() {
+				$(this).css({
+					'float': 'left',
+					'margin-left': '0',
+					'z-index': 1,
+					'opacity': 1,
+					'width': imageWidth,
+					'height': 'auto'
+				});
+			});
+
+			$(window).resize(function() {
+				var imageWidth = $(window).width();
+
+				carouselImgs.each(function() {
+					$(this).css({
+						'float': 'left',
+						'margin-left': '0',
+						'z-index': 1,
+						'opacity': 1,
+						'width': imageWidth,
+						'height': 'auto'
+					});
+				});
+			});
+		}
+	}
+}
+
+function showThumbnails() {
+	$('.js-show-thumbnails').on('click', function() {
+		if(!$('.gallery-thumbnail-container').is(':visible')){
+			$('.gallery-thumbnail-container').slideDown('slow');
+			$(this).text('Hide Thumbnails');
+			$(this).parent().addClass('thumbnail-shown');
+		} else {
+			$('.gallery-thumbnail-container').slideUp('slow');
+			$(this).text('Show Thumbnails');
+			$(this).parent().removeClass('thumbnail-shown');
+		}
+	})
 }
