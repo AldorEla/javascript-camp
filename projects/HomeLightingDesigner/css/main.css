@@ -204,3 +204,6 @@ body:hover .gallery-thumbnail-container {
 	opacity: 0;
 }
 /* [END] Carousel Thumbnails Rules */
+.gallery-container .disabled {
+	display: none;
+}

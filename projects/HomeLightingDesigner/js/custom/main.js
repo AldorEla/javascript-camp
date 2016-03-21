@@ -94,7 +94,7 @@ function controlPanel() {
 	 * @param: 4th - object, all img tags contained in the given carousel; In this call: $('.gallery-preview > img')
 	 * @param: 5th - boolean, slide the images with a fadeIn/fadeOut effect; In this call: true
 	 **/
-	initSliderNavigation($('.next, .prev'), shownClass, hiddenClass, galleryPreviewImg, true); // Next button click event
+	initSliderNavigation($('.next, .prev'), shownClass, hiddenClass, galleryPreviewImg, 'fadeIn'); // Next button click event
 
 	/**
 	 * Init Swipe Slider Navigation
@@ -104,7 +104,7 @@ function controlPanel() {
 	/**
 	 * Init Tumbnail Navigation
 	 **/
-	initThumbnailNavigation($('.thumbnail'), shownClass, hiddenClass, galleryPreviewImg, true);
+	initThumbnailNavigation($('.thumbnail'), shownClass, hiddenClass, galleryPreviewImg, 'fadeIn');
 
 
 	/** Function Definitions ***/
@@ -117,36 +117,41 @@ function controlPanel() {
 	 * @param: shown 		- string, represents the currently visible image; Can be: 'image-shown'
 	 * @param: hidden 		- string, represents the invisibility CSS class; Can be: 'image-hidden'
 	 * @param: carouselImgs - object, all img tags contained in the given carousel; Can be: $('.gallery-preview > img')
-	 * @param: fadeIn 	    - boolean, slide the images with a fadeIn/fadeOut effect
+	 * @param: effect 	    - boolean, slide the images with a fadeIn/fadeOut effect
 	 **/
-	function initSliderNavigation(button, shown, hidden, carouselImgs, fadeIn) {
+	function initSliderNavigation(button, shown, hidden, carouselImgs, effect) {
 		var button 		 = $(button),
 		    carouselImgs = $(carouselImgs);
 
-		button.each(function() {
-			if(!$(this).hasClass('disabled')) {
-				$(this).on('click', function(e) {
-					e.preventDefault();
-					var button 			   = $(this),
-					    currentActiveImage = $('.'+shown);
-					
-					if($(this).hasClass('next')) {
-						var nextActiveImage    = currentActiveImage.next(),
-						    button 				   = $('.next');
-					} else {
-						var nextActiveImage    = currentActiveImage.prev(),
-						    button 				   = $('.prev');
-					}
+		if($('.' + shown).prev().length == 0) {
+			$('.prev').addClass('disabled');
+		}
 
-					// button.removeClass('disabled');
+		if($('.' + shown).next().length == 0) {
+			$('.next').addClass('disabled');
+		}
 
-					// SET THE RELATED PREVIEW
-					setRelatedPreview(button, currentActiveImage, nextActiveImage, carouselImgs, shown, hidden, fadeIn);
-
-					// SET THE RELATED THUMBNAIL
-					setRelatedThumbnail($('.' + shown), false, nextActiveImage);
-				});
+		button.on('click', function(e) {
+			var button 			   = $(this),
+			    currentActiveImage = $('.'+shown);
+			
+			if($(this).hasClass('next')) {
+				var nextActiveImage    = currentActiveImage.next(),
+				    button 				   = $('.next');
+			} else {
+				var nextActiveImage    = currentActiveImage.prev(),
+				    button 				   = $('.prev');
 			}
+
+			// button.removeClass('disabled');
+
+			// SET THE RELATED PREVIEW
+			setRelatedPreview(button, currentActiveImage, nextActiveImage, carouselImgs, shown, hidden, effect);
+
+			// SET THE RELATED THUMBNAIL
+			setRelatedThumbnail(shown, false);
+
+			e.preventDefault();
 		});
 	}
 
@@ -157,30 +162,23 @@ function controlPanel() {
 	 * @param: shown 		- string, represents the currently visible image; Can be: 'image-shown'
 	 * @param: hidden 		- string, represents the invisibility CSS class; Can be: 'image-hidden'
 	 * @param: carouselImgs - object, all img tags contained in the given carousel; Can be: $('.gallery-preview > img')
-	 * @param: fadeIn 	    - boolean, slide the images with a fadeIn/fadeOut effect
+	 * @param: effect 	    - boolean, slide the images with a fadeIn/fadeOut effect
 	 **/
-	function initThumbnailNavigation(thumbnail, shown, hidden, carouselImgs, fadeIn) {
+	function initThumbnailNavigation(thumbnail, shown, hidden, carouselImgs, effect) {
 		var thumbnail    = $(thumbnail),
 		    carouselImgs = $(carouselImgs);
 		
 		thumbnail.on('click', function() {
 			var thumbnail 		   = $(this),
 			    currentActiveImage = $('.'+shown),
-			    button 			   = $('.preview-control-arrow');
-
-			if(button.hasClass('next')) {
-				var nextActiveImage    = currentActiveImage.next(),
-				    button 				   = $('.next');
-			} else {
-				var nextActiveImage    = currentActiveImage.prev(),
-				    button 				   = $('.prev');
-			}
+			    nextActiveImage    = $('#'+thumbnail.data('preview-image')),
+			    button             = $('.preview-control-arrow');
 
 			// SET THE RELATED PREVIEW
-			setRelatedPreview(button, currentActiveImage, nextActiveImage, carouselImgs, shown, hidden, fadeIn);
+			setRelatedPreview(false, currentActiveImage, nextActiveImage, carouselImgs, shown, hidden, effect);
 
 			// SET THE RELATED THUMBNAIL
-			setRelatedThumbnail($('.' + shown), thumbnail, nextActiveImage);
+			setRelatedThumbnail(shown, thumbnail);
 		});
 	}
 
@@ -209,10 +207,10 @@ function controlPanel() {
 	 * @param: shown 			  - string, represents the currently visible image; Can be: 'image-shown'
 	 * @param: hidden 			  - string, represents the invisibility CSS class; Can be: 'image-hidden'
 	 * @param: carouselImgs 	  - object, all img tags contained in the given carousel; Can be: $('.gallery-preview > img')
-	 * @param: fadeIn 	    	  - boolean, slide the images with a fadeIn/fadeOut effect
+	 * @param: effect 	    	  - boolean, slide the images with a fadeIn/fadeOut effect
 	 **/
-	function setRelatedPreview(button, currentActiveImage, nextActiveImage, carouselImgs, shown, hidden, fadeIn) {
-		if(fadeIn == true) {
+	function setRelatedPreview(button, currentActiveImage, nextActiveImage, carouselImgs, shown, hidden, effect) {
+		if(effect == 'fadeIn') {
 			currentActiveImage.animate({
 			  	opacity: 0.5
 			}, {
@@ -232,12 +230,14 @@ function controlPanel() {
 			carouselImgs.not([currentActiveImage,nextActiveImage]).css({'z-index': 1});
 		}
 
-		$('.preview-control-arrow').removeClass('disabled');
-		if(nextActiveImage.length > 0) {
-			var slideId = parseInt(nextActiveImage.attr('id').match(/[0-9 -()+]+$/)[0]);
+		if(button != false) {
+			$('.preview-control-arrow').removeClass('disabled');
+			if(nextActiveImage.length > 0) {
+				var slideId = parseInt(nextActiveImage.attr('id').match(/[0-9 -()+]+$/)[0]);
 
-			if(carouselImgs.length == slideId || slideId == 1) {
-				button.addClass('disabled');
+				if(carouselImgs.length == slideId || slideId == 1) {
+					button.addClass('disabled');
+				}
 			}
 		}
 	}
@@ -249,22 +249,22 @@ function controlPanel() {
 	 * @param: thumbnail 		- object, represents the clicked thumbnail
 	 * @param: nextActiveImage	- object, represents the next image to be displayed
 	 **/
-	function setRelatedThumbnail(shownImage, thumbnail, nextActiveImage) {
+	function setRelatedThumbnail(shownImage, thumbnail) {
+		var shownImage = $('.' + shownImage);
+
 		$('.thumbnail').removeClass('current');
 
 		$('.thumbnail[data-preview-image="'+shownImage.attr('id')+'"]').addClass('current');
 
-		if(nextActiveImage.length > 0) {
-			var slideId = parseInt(shownImage.attr('id').match(/[0-9 -()+]+$/)[0]);
+		var slideId = parseInt(shownImage.attr('id').match(/[0-9 -()+]+$/)[0]);
 			
-			$('.preview-control-arrow').removeClass('disabled');
+		$('.preview-control-arrow').removeClass('disabled');
 
-			if(slideId) {	
-				if($('.gallery-thumbnail-list .thumbnail').length == slideId) {
-					$('.preview-control-arrow.next').addClass('disabled');
-				} else if(slideId == 1) {
-					$('.preview-control-arrow.prev').addClass('disabled');
-				}
+		if(slideId) {	
+			if($('.gallery-thumbnail-list .thumbnail').length == slideId) {
+				$('.preview-control-arrow.next').addClass('disabled');
+			} else if(slideId == 1) {
+				$('.preview-control-arrow.prev').addClass('disabled');
 			}
 		}
 	}
