@@ -31,18 +31,6 @@ $(window).on('resize', function() {
 
 });
 
-$(window).on('load', function() {
-
-	/**
-	 * Set the height of the Slider Carousel images; asign the maximum height value of the heighest image to all of the contained images
-	 * 
-	 * @param: 1st - object, all img tags contained in the given carousel; In this call: $('.gallery-preview > img')
-	 * @param: 2nd - object, left and right navigation button for the gallery preview; In this call: $('.gallery-container .preview-control-arrow')
-	 **/
-	setSliderCarouselMaxHeight($('.gallery-preview > img'), $('.gallery-container .preview-control-arrow'));
-
-});
-
 
 
 /**
@@ -250,25 +238,16 @@ function controlPanel() {
 			carouselImgs.not([currentActiveImage,nextActiveImage]).css({'z-index': 1});
 		} else if(effect == 'slideHorizontal') {
 			var counter = 0;
-			var imageWidth = $('.gallery-preview-container').innerWidth();
-
-			currentActiveImage.removeClass(shown).addClass('slide-image');
+			
+			currentActiveImage.removeClass(shown);
 			nextActiveImage.addClass(shown);
 			
 			counter = parseInt($('.'+shown).attr('id').match(/[0-9 -()+]+$/)[0])-1;
 			
-			var imageWidth = $('.gallery-preview-container').innerWidth();
-			$('.'+shown).css('width', Math.round(imageWidth));
-			$('.slide-image').css('width', Math.round(imageWidth - imageWidth/3));
-			
-			// carouselImgs.css('margin-left', 0);
+			carouselImgs.css('margin-left', 0);
 			carouselImgs.parent().animate({
 			  	marginLeft: '-'+$('.'+shown).outerWidth()*counter
 			}, 500);
-			
-
-			setTimeout(function() {
-			}, 300);
 		} else {
 			currentActiveImage.removeClass(shown).addClass(hidden).css({'z-index': -10});
 			nextActiveImage.addClass(shown).removeClass(hidden).css({'z-index': 20});
@@ -328,42 +307,36 @@ function controlPanel() {
 
 		if(effect == 'slideHorizontal') {
 			// Reset fadeIn Effect Style
-			carouselImgs.removeClass(hidden).not($('.'+shownClass)).addClass('slide-image');
+			carouselImgs.removeClass(hidden);
 			carouselImgs.parent().css({
 				'width': Math.round($(window).width()*carouselImgs.length)
 			});
-			// var imageWidth = $(window).width();
-			carouselImgs.each(function() {
-				var imageWidth = $('.gallery-preview-container').innerWidth();
+			var imageWidth = $(window).width();
 
+			carouselImgs.each(function() {
 				$(this).css({
 					'float': 'left',
-					'border-left': '15px solid #fff',
-					'border-right': '15px solid #fff',
+					'margin-left': '-'+imageWidth/4,
 					'z-index': 1,
 					'opacity': 1,
-					// 'width': imageWidth,
+					'width': imageWidth/2,
 					'height': 'auto'
 				});
-				$('.'+shownClass).css('width', Math.round(imageWidth));
-				$('.slide-image').css('width', Math.round(imageWidth - imageWidth/3));
 			});
 
-			$(window).on('resize', function() {
-				carouselImgs.each(function() {
-					var imageWidth = $('.gallery-preview-container').innerWidth();
+			$(window).resize(function() {
+				var imageWidth = $(window).width();
 
+				carouselImgs.each(function() {
 					$(this).css({
 						'float': 'left',
-						'border-left': '15px solid #fff',
-						'border-right': '15px solid #fff',
+						'margin-left': '-'+imageWidth/4,
 						'z-index': 1,
 						'opacity': 1,
-						'width': imageWidth,
+						'width': imageWidth/2,
 						'height': 'auto'
 					});
 				});
-				// setSliderCarouselMaxHeight($('.gallery-preview > img'), $('.gallery-container .preview-control-arrow'));
 			});
 		}
 	}
