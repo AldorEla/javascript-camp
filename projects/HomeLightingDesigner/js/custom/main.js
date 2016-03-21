@@ -238,36 +238,16 @@ function controlPanel() {
 			carouselImgs.not([currentActiveImage,nextActiveImage]).css({'z-index': 1});
 		} else if(effect == 'slideHorizontal') {
 			var counter = 0;
-			if(button != false) {
-				// Method no. 1, when button != false
-				carouselImgs.each(function(i, v) {
-					if($(this).hasClass(shown)) {
-						if($(button).hasClass('next')) {
-							counter = i+1;
-						} else {
-							counter = i-1;
-						}
-
-						carouselImgs.css('margin-left', 0);
-						carouselImgs.parent().animate({
-						  	marginLeft: '-'+currentActiveImage.outerWidth()*counter
-						}, 500);
-					}
-				});
-				currentActiveImage.removeClass(shown);
-				nextActiveImage.addClass(shown);
-			} else {
-				// Method no. 2, when button == false
-				currentActiveImage.removeClass(shown);
-				nextActiveImage.addClass(shown);
-				
-				counter = parseInt($('.'+shown).attr('id').match(/[0-9 -()+]+$/)[0])-1;
-				
-				carouselImgs.css('margin-left', 0);
-				carouselImgs.parent().animate({
-				  	marginLeft: '-'+$('.'+shown).outerWidth()*counter
-				}, 500);
-			}
+			
+			currentActiveImage.removeClass(shown);
+			nextActiveImage.addClass(shown);
+			
+			counter = parseInt($('.'+shown).attr('id').match(/[0-9 -()+]+$/)[0])-1;
+			
+			carouselImgs.css('margin-left', 0);
+			carouselImgs.parent().animate({
+			  	marginLeft: '-'+$('.'+shown).outerWidth()*counter
+			}, 500);
 		} else {
 			currentActiveImage.removeClass(shown).addClass(hidden).css({'z-index': -10});
 			nextActiveImage.addClass(shown).removeClass(hidden).css({'z-index': 20});
