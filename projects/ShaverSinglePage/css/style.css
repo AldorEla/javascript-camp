@@ -211,3 +211,59 @@ section.module.parallax {
 
 .bt_hidden{ opacity:0;}
 .bt_visible{ opacity:1;}
+
+/*
+ * Shaver Controls Styling Rules
+ */
+.control-panel {
+	/*width: 20%;*/
+	/*height: 20%;*/
+	width: 4vw;
+	position: absolute;
+	z-index: 101;
+	left: 42%;
+	text-align: center;
+}
+.control-panel img {
+	margin: 0;
+	padding: 0;
+	width: 100%;
+}
+.control-panel.top {
+	top: 39%;
+}
+.control-panel.middle {
+	width: 5vw;
+	top: 57.5%;
+	left: 40%;
+}
+.control-panel.bottom {
+	width: 1.75vw;
+	left: 46.5%;
+	top: 78%;
+}
+.control-panel.middle img {
+	margin-bottom: -40%;
+}
+.control-panel.bottom img {
+	margin-bottom: -40%;
+}
+.control-panel.bottom img:nth-last-child(2) {
+	margin-bottom: -120%;
+}
+/* [END] Shaver Controls Styling Rules */
+
+@media screen and (max-width:1024px) {
+	.control-panel {
+		width: 50px;
+		top: 38%;
+		left: 36%;
+	}
+}
+@media screen and (max-width:480px) {
+	.control-panel {
+		width: 30px;
+		top: 38%;
+		left: 36%;
+	}
+}

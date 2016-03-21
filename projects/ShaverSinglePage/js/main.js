@@ -103,6 +103,7 @@ function sectionScroll() {
 	var firstSection   = $('#'+controlsScroll.data('first-section'));
 	var firstSectionHeight = 'auto';
 	var maxHeight      = 0;
+	var sectionHeight  = $('#aquatec').height();
 	firstSection.children().each(function() {
 		if($(this).height() > maxHeight) {
 			maxHeight = $(this).height();
@@ -112,22 +113,109 @@ function sectionScroll() {
 	
 	controlsScroll.css({ 'height': firstSectionHeight + 'px', 'overflow': 'auto'});
 
-	var lastScrollTop = 0;
+	controlsScroll.on('hover', function() {
+		$(this).trigger('click');
+	})
+
+	// var lastScrollTop = 0;
 	controlsScroll.on('scroll', function(e) {
-		$.each( $('.static'), function( i, val ) {
-			i = i + 1;
-			console.log(i);
-			console.log(val);
-	    	var elemTop = $('#controls'+i).offset().top;
-		    var elemBottom = elemTop + $('#controls'+i).height();
-		    
-	    	var result = ((elemBottom <= (controlsScroll.height() + controlsScroll.offset().top)) && (elemTop >= controlsScroll.offset().top));
-		    $('#controls'+i).removeClass('intoView');
-		    if(result == true) {
-		    	$('#controls'+i).addClass('intoView');
-		    	console.log($('#controls'+i));
-			}
-		});
-		// $(this).off(e);
+
+		/****/
+		if(controlsScroll.scrollTop() > 0 && controlsScroll.scrollTop() < sectionHeight) {
+			$(window).scrollTop(sectionHeight);
+
+			$('#controls1 .description-content').fadeIn( "medium", function() {
+				$('#controls1 .description-content').removeClass('bt_hidden');
+			});
+
+			$('#controls2 .description-content').fadeOut( "medium", function() {
+				$('#controls2 .description-content').addClass('bt_hidden');
+			});
+
+			$('#controls3 .description-content').fadeOut( "medium", function() {
+				$('#controls3 .description-content').addClass('bt_hidden');
+			});
+
+			setTimeout(function() {
+				$('#controls1 .control-panel').fadeIn( "medium", function() {
+					$('#controls1 .control-panel').removeClass('bt_hidden');
+				});
+
+				$('#controls2 .control-panel').fadeOut( "medium", function() {
+					$('#controls2 .control-panel').addClass('bt_hidden');
+				});
+
+				$('#controls3 .control-panel').fadeOut( "medium", function() {
+					$('#controls3 .control-panel').addClass('bt_hidden');
+				});
+			}, 500);
+
+			verticallyPositionTextBox();
+		}
+
+		if(controlsScroll.scrollTop() > sectionHeight && controlsScroll.scrollTop() < sectionHeight * 2) {
+			$(window).scrollTop(sectionHeight);
+
+			$('#controls1 .description-content').fadeOut( "medium", function() {
+				$('#controls1 .description-content').addClass('bt_hidden');
+			});
+
+			$('#controls2 .description-content').fadeIn( "medium", function() {
+				$('#controls2 .description-content').removeClass('bt_hidden');
+			});
+
+			$('#controls3 .description-content').fadeOut( "medium", function() {
+				$('#controls3 .description-content').addClass('bt_hidden');
+			});
+
+			setTimeout(function() {
+				$('#controls1 .control-panel').fadeOut( "medium", function() {
+					$('#controls1 .control-panel').addClass('bt_hidden');
+				});
+
+				$('#controls2 .control-panel').fadeIn( "medium", function() {
+					$('#controls2 .control-panel').removeClass('bt_hidden');
+				});
+
+				$('#controls3 .control-panel').fadeOut( "medium", function() {
+					$('#controls3 .control-panel').addClass('bt_hidden');
+				});
+			}, 500);
+
+			verticallyPositionTextBox();
+		}
+
+		if(controlsScroll.scrollTop() > sectionHeight * 2 && controlsScroll.scrollTop() < sectionHeight * 3) {
+			$(window).scrollTop(sectionHeight);
+
+			$('#controls1 .description-content').fadeOut( "medium", function() {
+				$('#controls1 .description-content').addClass('bt_hidden');
+			});
+
+			$('#controls2 .description-content').fadeOut( "medium", function() {
+				$('#controls2 .description-content').removeClass('bt_hidden');
+			});
+
+			$('#controls3 .description-content').fadeIn( "medium", function() {
+				$('#controls3 .description-content').removeClass('bt_hidden');
+			});
+
+			setTimeout(function() {
+				$('#controls1 .control-panel').fadeOut( "medium", function() {
+					$('#controls1 .control-panel').addClass('bt_hidden');
+				});
+
+				$('#controls2 .control-panel').fadeOut( "medium", function() {
+					$('#controls2 .control-panel').removeClass('bt_hidden');
+				});
+
+				$('#controls3 .control-panel').fadeIn( "medium", function() {
+					$('#controls3 .control-panel').removeClass('bt_hidden');
+				});
+			}, 500);
+
+			verticallyPositionTextBox();
+		}
 	});
 }
+
