@@ -172,39 +172,12 @@ header .search-header input {
 	vertical-align: middle;
 	box-sizing: border-box;
 }
-/*.gallery-preview .image-shown:after {
-	content: '\A';
-    position: absolute;
-    width: 100%; 
-    height: 100%;
-    top: 0; 
-    left: 0;
-    background: rgba(0, 0, 0, 1);
-    transition: all 0.5s ease;
-    -webkit-transition: all 0.5s ease;
-    opacity: 1;
-}
-.swipe:hover .image-shown:after {
-	opacity: 0;
-}*/
 .gallery-preview .image-shown {
 	width: 100%;
 	border: 0 solid transparent;
 	box-sizing: border-box;
 	display: inline-block;
 	opacity: 1;
-}
-.gallery-preview .slide-image:after {
-	content: '\A';
-    position: absolute;
-    width: 100%; 
-    height: 100%;
-    top: 0; 
-    left: 0;
-    background: rgba(0, 0, 0, 0.3);
-}
-.gallery-preview .slide-image:after:hover {
-	opacity: 0;
 }
 .gallery-preview .image-hidden {
 	display: none;
@@ -213,8 +186,20 @@ header .search-header input {
 .gallery-preview .slide-image {
 	display: inline-block;
 	opacity: 1;
-    transition: background-color 0.5s ease;
-    -webkit-transition: background-color 0.5s ease;
+    transition: filter 0.5s ease;
+    -webkit-transition: filter 0.5s ease;
+    filter: grayscale(0.77);
+	-webkit-filter: grayscale(0.77);
+	-moz-filter: grayscale(0.77);
+	-o-filter: grayscale(0.77);
+	-ms-filter: grayscale(0.77);
+}
+.gallery-preview .slide-image:hover {
+	filter: grayscale(0);
+	-webkit-filter: grayscale(0);
+	-moz-filter: grayscale(0);
+	-o-filter: grayscale(0);
+	-ms-filter: grayscale(0);
 }
 .gallery-preview-container {
 	width: 50%;
@@ -234,14 +219,13 @@ header .search-header input {
 }
 .gallery-thumbnail-container .thumbnail-control-arrow {
 	font-size: 2vw;
-	color: #333;
+	color: #777;
 	display: block;
 	position: absolute;
+	top: calc(50%/2);
 	z-index: 100;
-	/*margin-top: calc(50%/2);*/
-	top: 30px;
 	transition: all 0.5s ease;
-	opacity: .5;
+	opacity: .75;
 }
 .gallery-preview-container .preview-control-arrow:hover,
 .gallery-thumbnail-container .thumbnail-control-arrow:hover {
@@ -308,13 +292,6 @@ header .search-header input {
 	padding: 10px 0;
 	background: #333;
 	border-bottom: 10px solid #111;
-}
-.gallery-thumbnail-container .thumbnail-prev,
-.gallery-thumbnail-container .thumbnail-next {
-	display: block;
-	position: absolute;
-	top: 0;
-	z-index: 100;
 }
 .gallery-thumbnail-container .thumbnail-prev {
 	left: 20px;
