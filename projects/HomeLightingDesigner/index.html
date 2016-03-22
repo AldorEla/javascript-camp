@@ -9,97 +9,116 @@
 	<link rel="stylesheet" type="text/css" href="css/main.css">
 </head>
 <body data-role="page">
-	<header>
-		<div class="header-content">
-			<div class="homepage-link float-left">
-				<a href="#" title="Go to the Home Page"><em>Home Page</em></a>
-			</div>
-			<div class="float-right">
-				<div class="search-header float-left">
-					<a href="#" title="Search"><em>Search</em></a>
+	<div class="visible-content">
+		<header>
+			<div class="header-content">
+				<div class="homepage-link float-left">
+					<a href="#" title="Go to the Home Page"><em>Home Page</em></a>
 				</div>
-				<nav class="responsive-nav float-left margin-left-50">
-					<a class="js-toggle-menu toggle-menu" href="javascript: void(0);" title="Show/Hide Menu"><em>Menu</em></a>
-					<ul class="hidden">
-						<li></li>
-					</ul>
-				</nav>
-			</div>
-			<div class="clearfix"></div>
-		</div>
-	</header>
-	<main data-role="main position-relative">
-		<div class="gallery-container">
-			<div class="gallery-preview-text">
-				<h1 class="main-title">Home Lighting Designer</h1>
-			</div>
-			<section class="gallery-preview-container position-relative">
-				<div class="swipe"></div>
-				<a class="preview-control-arrow prev" href="javascript: void(0);" title="Go to the Previous image" role="slider-navigation"><i class="fa fa-chevron-circle-left fa-lg"></i></a>
-				<section class="gallery-preview">
-					<img id="image-1" class="image-hidden" src="images/gallery/carousel_image_1.jpg" alt="Image: Slide Image 1">
-					<img id="image-2" class="image-shown" src="images/gallery/carousel_image_1.jpg" alt="Image: Slide Image 2">
-					<img id="image-3" class="image-hidden" src="images/gallery/carousel_image_1.jpg" alt="Image: Slide Image 3">
-					<img id="image-4" class="image-hidden" src="images/gallery/carousel_image_1.jpg" alt="Image: Slide Image 4">
-					<img id="image-5" class="image-hidden" src="images/gallery/carousel_image_1.jpg" alt="Image: Slide Image 5">
-				</section>
-				<a class="preview-control-arrow next" href="javascript: void(0);" title="Go to the Next image" role="slider-navigation"><i class="fa fa-chevron-circle-right fa-lg"></i></a>
+				<div class="float-right">
+					<div class="search-header float-left">
+						<a href="#" title="Search"><em>Search</em></a>
+					</div>
+					<nav class="responsive-nav float-left margin-left-50">
+						<a class="js-toggle-aside toggle-menu" href="javascript: void(0);" title="Show Aside"><em>Menu</em></a>
+					</nav>
+				</div>
 				<div class="clearfix"></div>
-			</section>
-			<section class="gallery-thumbnail-section">
-				<div class="show-thumbnails"><span class="js-show-thumbnails btn-show">Show Thumbnails</span></div>
-				<section class="gallery-thumbnail-container">
-					<div class="position-relative">
-						<a class="thumbnail-control-arrow thumbnail-prev" href="javascript: void(0);" title="Go to the Previous thumbnail" role="thumbnails-navigation"><i class="fa fa-chevron-circle-left fa-lg"></i></a>
-						<div class="gallery-thumbnail">
-							<ul class="gallery-thumbnail-list">
-								<li class="thumbnail" data-preview-image="image-1">
-									<img src="images/gallery/thumbnail/carousel_image_1.jpg" alt="Image: Slide Image 1" width="120" height="80">
-								</li>
-								<li class="thumbnail current" data-preview-image="image-2">
-									<img src="images/gallery/thumbnail/carousel_image_1.jpg" alt="Image: Slide Image 2" width="120" height="80">
-								</li>
-								<li class="thumbnail" data-preview-image="image-3">
-									<img src="images/gallery/thumbnail/carousel_image_1.jpg" alt="Image: Slide Image 3" width="120" height="80">
-								</li>
-								<li class="thumbnail" data-preview-image="image-4">
-									<img src="images/gallery/thumbnail/carousel_image_1.jpg" alt="Image: Slide Image 4" width="120" height="80">
-								</li>
-								<li class="thumbnail" data-preview-image="image-5">
-									<img src="images/gallery/thumbnail/carousel_image_1.jpg" alt="Image: Slide Image 5" width="120" height="80">
-								</li>
-							</ul>
-						</div>
-						<a class="thumbnail-control-arrow thumbnail-next" href="javascript: void(0);" title="Go to the Next thumbnail" role="thumbnails-navigation"><i class="fa fa-chevron-circle-right fa-lg"></i></a>
-						<div class="clearfix"></div>
-					</div>
+			</div>
+		</header>
+		<main data-role="main position-relative">
+			<div class="gallery-container">
+				<div class="gallery-preview-text">
+					<h1 class="main-title">Home Lighting Designer</h1>
+				</div>
+				<section class="gallery-preview-container position-relative">
+					<div class="swipe"></div>
+					<a class="preview-control-arrow prev" href="javascript: void(0);" title="Go to the Previous image" role="slider-navigation"><i class="fa fa-chevron-circle-left fa-lg"></i></a>
+					<section class="gallery-preview">
+						<img id="image-1" class="image-hidden" src="images/gallery/carousel_image_1.jpg" alt="Image: Slide Image 1">
+						<img id="image-2" class="image-shown" src="images/gallery/carousel_image_1.jpg" alt="Image: Slide Image 2">
+						<img id="image-3" class="image-hidden" src="images/gallery/carousel_image_1.jpg" alt="Image: Slide Image 3">
+						<img id="image-4" class="image-hidden" src="images/gallery/carousel_image_1.jpg" alt="Image: Slide Image 4">
+						<img id="image-5" class="image-hidden" src="images/gallery/carousel_image_1.jpg" alt="Image: Slide Image 5">
+					</section>
+					<a class="preview-control-arrow next" href="javascript: void(0);" title="Go to the Next image" role="slider-navigation"><i class="fa fa-chevron-circle-right fa-lg"></i></a>
+					<div class="clearfix"></div>
 				</section>
-			</section>
-		</div>
-		<div class="categories">
-			<ul>
-				<li>
-					<div class="box check-icon">
-						<div class="float-left">
-							<h2>I know what I want</h2>
-							<p class="color-light-blue">Choose lighting categories</p>
+				<section class="gallery-thumbnail-section">
+					<div class="show-thumbnails"><span class="js-show-thumbnails btn-show">Show Thumbnails</span></div>
+					<section class="gallery-thumbnail-container">
+						<div class="position-relative">
+							<a class="thumbnail-control-arrow thumbnail-prev" href="javascript: void(0);" title="Go to the Previous thumbnail" role="thumbnails-navigation"><i class="fa fa-chevron-circle-left fa-lg"></i></a>
+							<div class="gallery-thumbnail">
+								<ul class="gallery-thumbnail-list">
+									<li class="thumbnail" data-preview-image="image-1">
+										<img src="images/gallery/thumbnail/carousel_image_1.jpg" alt="Image: Slide Image 1" width="120" height="80">
+									</li>
+									<li class="thumbnail current" data-preview-image="image-2">
+										<img src="images/gallery/thumbnail/carousel_image_1.jpg" alt="Image: Slide Image 2" width="120" height="80">
+									</li>
+									<li class="thumbnail" data-preview-image="image-3">
+										<img src="images/gallery/thumbnail/carousel_image_1.jpg" alt="Image: Slide Image 3" width="120" height="80">
+									</li>
+									<li class="thumbnail" data-preview-image="image-4">
+										<img src="images/gallery/thumbnail/carousel_image_1.jpg" alt="Image: Slide Image 4" width="120" height="80">
+									</li>
+									<li class="thumbnail" data-preview-image="image-5">
+										<img src="images/gallery/thumbnail/carousel_image_1.jpg" alt="Image: Slide Image 5" width="120" height="80">
+									</li>
+								</ul>
+							</div>
+							<a class="thumbnail-control-arrow thumbnail-next" href="javascript: void(0);" title="Go to the Next thumbnail" role="thumbnails-navigation"><i class="fa fa-chevron-circle-right fa-lg"></i></a>
+							<div class="clearfix"></div>
 						</div>
-						<div class="clearfix"></div>
-					</div>
-				</li>
-				<li>
-					<div class="box check-icon">
-						<div class="float-left">
-							<h2>Inspire me</h2>
-							<p class="color-light-blue">Choose decorating styles</p>
+					</section>
+				</section>
+			</div>
+			<div class="categories">
+				<ul>
+					<li>
+						<div class="box">
+							<div class="check-icon float-left">
+								<img src="images/common/check_icon.png" alt="check_icon.png">
+							</div>
+							<div class="float-left">
+								<h2>I know what I want</h2>
+								<p class="color-light-blue">Choose lighting categories</p>
+							</div>
+							<div class="clearfix"></div>
 						</div>
-						<div class="clearfix"></div>
-					</div>
-				</li>
-			</ul>
-			<div class="clearfix"></div>
+					</li>
+					<li>
+						<div class="box">
+							<div class="sparkle-icon float-left">
+								<img src="images/common/sparkle_icon.png" alt="check_icon.png">
+							</div>
+							<div class="float-left">
+								<h2>Inspire me</h2>
+								<p class="color-light-blue">Choose decorating styles</p>
+							</div>
+							<div class="clearfix"></div>
+						</div>
+					</li>
+				</ul>
+				<div class="clearfix"></div>
+			</div>
+		</main>
+	</div>
+	<aside class="fill-height-or-more">
+		<div class="aside-content position-relative">
+			<div class="aside-icon align-self-start">
+				<a href="#"><img src="images/common/favorite_notification_icon.png" alt="favorite_notification_icon.png"></a>
+			</div>
+			<div class="aside-icon align-self-start">
+				<a href="#"><img src="images/common/cart_icon.png" alt="cart_icon.png"></a>
+			</div>
+			<div class="jumper"></div>
+			<div class="aside-icon algin-self-bottom">
+				<a href="#"><img src="images/common/help_icon.png" alt="help_icon.png"></a>
+			</div>
 		</div>
-	</main>
+	</aside>
 	<!-- Include assets: JavaScript -->
 	<script src="js/jQuery/jquery-2.2.2.min.js"></script>
 	<script src="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>

@@ -15,6 +15,10 @@ $(document).ready(function () {
      * Initialize the Control Panel functions
      **/
     controlPanel();
+    /**
+     * Close Aside
+     **/
+    closeAside();
 });
 $(window).on('resize', function () {
     /**
@@ -24,6 +28,10 @@ $(window).on('resize', function () {
      * @param: 2nd - object, left and right navigation button for the gallery preview; In this call: $('.gallery-container .preview-control-arrow')
      **/
     setSliderCarouselMaxHeight($('.gallery-preview > img'), $('.gallery-container .preview-control-arrow'));
+    /**
+     * Close Aside
+     **/
+    closeAside();
 });
 $(window).on('load', function () {
     /**
@@ -33,6 +41,10 @@ $(window).on('load', function () {
      * @param: 2nd - object, left and right navigation button for the gallery preview; In this call: $('.gallery-container .preview-control-arrow')
      **/
     setSliderCarouselMaxHeight($('.gallery-preview > img'), $('.gallery-container .preview-control-arrow'));
+    /**
+     * Close Aside
+     **/
+    closeAside();
 });
 /**
  * Set the height of the Slider Carousel images; asign the maximum height value of the heighest image to all of the contained images
@@ -132,6 +144,8 @@ function controlPanel() {
         carouselImgsContainer.css({
             'margin-left': -spaceLeft + 'px'
         });
+        // Reset fadeIn Effect Style, if effect is slideHorizontal
+        resetFadeInEffectStyle(effectStyle, galleryPreviewImg, hiddenClass);
     }
     /**
      * Slider Navigation buttons
@@ -153,8 +167,6 @@ function controlPanel() {
         // Reset fadeIn Effect Style, if effect is slideHorizontal
         resetFadeInEffectStyle(effect, carouselImgs, hidden);
         button.on('click', function (e) {
-            // Reset fadeIn Effect Style, if effect is slideHorizontal
-            resetFadeInEffectStyle(effect, carouselImgs, hidden);
             var button = $(this), currentActiveImage = $('.' + shown);
             if ($(this).hasClass('next')) {
                 var nextActiveImage = currentActiveImage.next(), button = $('.next');
@@ -306,15 +318,33 @@ function controlPanel() {
      **/
     function resetFadeInEffectStyle(effect, carouselImgs, hidden) {
         var effect = effect, carouselImgs = $(carouselImgs), hidden = hidden;
+        var maxMobileResolution = 768;
+        var divider = 2;
         if (effect == 'slideHorizontal') {
             // Reset fadeIn Effect Style
             carouselImgs.removeClass(hidden).not($('.' + shownClass)).addClass('slide-image');
             carouselImgs.parent().css({
                 'width': Math.round($(window).width() * carouselImgs.length)
             });
+            $(window).on('load', function () {
+                var thumbnailsTotalWidth = Math.round((($('.thumbnail.current > img').width() + 5 +
+                    (parseInt($('.thumbnail').css('border-left-width'))) * divider)) *
+                    carouselImgs.length);
+                $('.gallery-thumbnail-list').css({
+                    'width': thumbnailsTotalWidth
+                });
+                if (thumbnailsTotalWidth > $(window).width() && $(window) < maxMobileResolution) {
+                    // Set leftMargin if the total width of the thumbnails is greater than window's width
+                    var thumnailsLeftSpace = 0;
+                    thumnailsLeftSpace = $('.thumbnail.current').width() * parseInt($('.' + shownClass).attr('id').match(/[0-9 -()+]+$/)[0]);
+                    $('.gallery-thumbnail-list').css({
+                        'margin-left': -thumnailsLeftSpace + 'px'
+                    });
+                }
+            });
             var borderStyle = 'none';
-            if ($(window).width() >= 1024) {
-                borderStyle = '15px solid #fff';
+            if ($(window).width() >= maxMobileResolution) {
+                borderStyle = '10px solid #fff';
             }
             carouselImgs.each(function () {
                 var imageWidth = Math.round($('.gallery-preview-container').innerWidth());
@@ -350,6 +380,9 @@ function controlPanel() {
         }
     }
 }
+/**
+ * Show Thumbnails
+ **/
 function showThumbnails() {
     $('.js-show-thumbnails').on('click', function () {
         if (!$('.gallery-thumbnail-container').is(':visible')) {
@@ -362,5 +395,32 @@ function showThumbnails() {
             $(this).text('Show Thumbnails');
             $(this).parent().removeClass('thumbnail-shown');
         }
+    });
+}
+/**
+ * Close Aside
+ **/
+function closeAside() {
+    var showAsideBtn = $('.js-toggle-aside');
+    var openClass = 'expanded';
+    var asideElem = $('aside');
+    $(showAsideBtn).unbind().on('click', function (e) {
+        if (asideElem.hasClass(openClass)) {
+            $('.visible-content').animate({
+                'margin-right': 0
+            }, 500);
+            asideElem.removeClass(openClass);
+            $(this).removeClass(openClass);
+            $(this).attr('title', 'Show Aside');
+        }
+        else {
+            $('.visible-content').animate({
+                'margin-right': asideElem.outerWidth()
+            }, 500);
+            asideElem.addClass(openClass);
+            $(this).addClass(openClass);
+            $(this).attr('title', 'Hide Aside');
+        }
+        e.preventDefault();
     });
 }

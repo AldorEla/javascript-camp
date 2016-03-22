@@ -48,7 +48,6 @@ a, a:hover, a:active, a:visited, a:focus {
  * General Rules
  */
 body {
-	font-size: 14px; /* Base font-size for rem conversion */
 	width: 100%;
 	font-family: "PT Sans";
 	text-align: center;
@@ -56,7 +55,7 @@ body {
 main {
 	width: 100%;
 	margin: 0 auto;
-	padding: 0 0 40px;
+	padding: 0 0 30px;
 }
 /* [END] General Rules */
 
@@ -90,8 +89,10 @@ header .header-content {
 }
 header .homepage-link a,
 header .search-header a {
-	line-height: normal;
 	font-weight: 400;
+	height: 40px;
+	overflow: hidden;
+	display: block;
 }
 header .homepage-link em,
 header .search-header em,
@@ -116,6 +117,9 @@ header .search-header a:before {
 }
 header .responsive-nav a.toggle-menu:before {
 	content: url("../images/common/menu_icon.png");
+}
+header .responsive-nav a.toggle-menu.expanded:before {
+	content: url("../images/common/close_icon.png");
 }
 header .search-header input {
 	opacity: 0;
@@ -204,8 +208,8 @@ header .search-header input {
 .gallery-preview-container {
 	width: 50%;
 	margin: 0 auto;
-	margin-top: 30px;
-	margin-bottom: 30px;
+	margin-top: 20px;
+	margin-bottom: 20px;
 }
 .gallery-preview-container .preview-control-arrow {
 	font-size: 2vw;
@@ -314,8 +318,9 @@ header .search-header input {
 }
 .gallery-thumbnail-list {
 	margin: 0;
-	padding: 0;
-	width: 100%;
+	padding: 0 5px;
+	min-width: 100%;
+	box-sizing: border-box;
 }
 .gallery-thumbnail-list li {
 	display: inline-block;
@@ -326,6 +331,7 @@ header .search-header input {
 	position: relative;
 	border-left: 5px solid transparent;
 	border-right: 5px solid transparent;
+	box-sizing: border-box;
 }
 .thumbnail:after {
 	content: '\A';
@@ -349,6 +355,7 @@ header .search-header input {
 	display: none;
 }
 /* [END] Carousel Thumbnails Rules */
+
 /**
  * Categories Boxes Rules
  */
@@ -360,31 +367,27 @@ header .search-header input {
 }
 .categories ul {
 	list-style-type: none;
-	margin: 0 15px;
+	margin: 0 10px;
 	padding: 0;
 	box-sizing: border-box;
 }
 .categories ul li {
 	width: 50%;
-	padding: 0 15px;
+	padding: 0 10px;
 	box-sizing: border-box;
 	float: left;
 }
-.categories ul li .box.check-icon:before {
-	content: url("../images/common/check_icon.png");
-	max-width: 100%;
-	float: left;
+.categories ul li .box .check-icon,
+.categories ul li .box .sparkle-icon {
+	width: auto;
 	margin-right: 20px;
-	margin-top: 15px;
-	padding-left: 40px;
+	padding-left: 20px;
 }
-.categories ul li .box.stars-icon:before {
-	content: url("../images/common/sparkle_icon.png");
-	max-width: 100%;
-	float: left;
-	margin-right: 20px;
-	margin-top: 15px;
-	padding-left: 40px;
+.categories ul li .box .check-icon img,
+.categories ul li .box .sparkle-icon img {
+	margin-top: 5px;
+	max-height: 2.5vw;
+	vertical-align: middle;
 }
 .categories ul li .box {
 	width: 100%;
@@ -410,7 +413,98 @@ header .search-header input {
 }
 /* [END] Categories Boxes Rules */
 
-@media screen and (max-width: 1023px) {
+/**
+ * Aside Rules
+ */
+.visible-content {
+	z-index: 2;
+	position: relative;
+	background: #fff;
+}
+aside {
+ 	/*right: -100%;*/
+ 	right: 0;
+ 	top: 0;
+ 	height: 100%;
+ 	z-index: 1;
+ 	padding: 15px 30px;
+ 	position: fixed;
+ 	text-align: center;
+ 	background: rgb(26,34,62); /* Old browsers */
+	background: -moz-linear-gradient(top,  rgba(26,34,62,1) 0%, rgba(40,59,120,1) 57%, rgba(33,46,86,1) 100%); /* FF3.6-15 */
+	background: -webkit-linear-gradient(top,  rgba(26,34,62,1) 0%,rgba(40,59,120,1) 57%,rgba(33,46,86,1) 100%); /* Chrome10-25,Safari5.1-6 */
+	background: linear-gradient(to bottom,  rgba(26,34,62,1) 0%,rgba(40,59,120,1) 57%,rgba(33,46,86,1) 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#1a223e', endColorstr='#212e56',GradientType=0 ); /* IE6-9 */
+	box-sizing: border-box;
+ }
+ aside.expanded {
+ 	/*right: 0;*/
+ }
+.fill-height-or-more {
+	display: -webkit-box;
+	display: -webkit-flex;
+	display: -moz-box;
+	display: -ms-flexbox;
+	display: flex;
+	-webkit-box-orient: vertical;
+	-webkit-box-direction: normal;
+	-webkit-flex-direction: column;
+	-moz-box-orient: vertical;
+	-moz-box-direction: normal;
+	-ms-flex-direction: column;
+	flex-direction: column;
+} 
+.fill-height-or-more > div.aside-content {
+	-webkit-box-flex: 1;
+	-webkit-flex: 1;
+	-moz-box-flex: 1;
+	-ms-flex: 1;
+	flex: 1;
+	display: -webkit-box;
+	display: -webkit-flex;
+	display: -moz-box;
+	display: -ms-flexbox;
+	display: flex;
+	justify-content: center;*/
+	-webkit-box-orient: vertical;
+	-webkit-box-direction: normal;
+	-webkit-flex-direction: column;
+	-moz-box-orient: vertical;
+	-moz-box-direction: normal;
+	-ms-flex-direction: column;
+	flex-direction: column;
+}
+.aside-icon {
+	width: 100%;
+	text-align: center;
+}
+.aside-content img {
+	max-height: 6vh;
+	margin-bottom: 6vh;
+}
+.aside-content img:first-child {
+	margin-top: 6vh;
+}
+.align-self-start {
+	align-self: flex-auto;
+}
+.align-self-bottom {
+	align-self: flex-end;
+	margin-top: auto;
+}
+.jumper {
+	height: 100%;
+}
+/* [END] Aside Rules */
+
+@media screen and (max-width: 767px) {
+	.gallery-preview-text .main-title {
+		font-size: 4vw;
+	}
+	.gallery-preview-container .preview-control-arrow,
+	.gallery-thumbnail-container .thumbnail-control-arrow {
+		font-size: 4vw;
+	}
 	.gallery-preview-container {
 		width: 100%;
 	}
@@ -422,6 +516,16 @@ header .search-header input {
 	}
 	.categories ul li {
 		width: 100%;
-		padding: 15px;
+		padding: 10px;
+	}
+	.gallery-thumbnail-list {
+		text-align: left;
+	}
+	.categories {
+		font-size: 2.5vw;
+	}
+	.categories ul li .box .check-icon img, 
+	.categories ul li .box .sparkle-icon img {
+		max-height: 5vw;
 	}
 }
