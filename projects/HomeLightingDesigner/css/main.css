@@ -232,14 +232,28 @@ header .search-header input {
 	transition: all 0.5s ease;
 	opacity: .5;
 }
-.gallery-preview-container .preview-control-arrow:hover {
+.gallery-thumbnail-container .thumbnail-control-arrow {
+	font-size: 2vw;
+	color: #333;
+	display: block;
+	position: absolute;
+	z-index: 100;
+	/*margin-top: calc(50%/2);*/
+	top: 30px;
+	transition: all 0.5s ease;
+	opacity: .5;
+}
+.gallery-preview-container .preview-control-arrow:hover,
+.gallery-thumbnail-container .thumbnail-control-arrow:hover {
 	color: #960000;
 	opacity: 1;
 }
-.gallery-preview-container .preview-control-arrow.prev {
+.gallery-preview-container .preview-control-arrow.prev,
+.gallery-thumbnail-container .thumbnail-control-arrow.thumbnail-prev {
 	left: 20px;
 }
-.gallery-preview-container .preview-control-arrow.next {
+.gallery-preview-container .preview-control-arrow.next,
+.gallery-thumbnail-container .thumbnail-control-arrow.thumbnail-next {
 	right: 20px;
 }
 /* [END] Carousel Slider Rules */

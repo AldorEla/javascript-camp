@@ -365,7 +365,7 @@ function controlPanel() {
 		if(slideId) {	
 			if($('.gallery-thumbnail-list .thumbnail').length == slideId) {
 				$('.preview-control-arrow.next').addClass('disabled');
-				// $('.thumbnail-control-arrow.thumbnail-next').addClass('disabled');
+				$('.thumbnail-control-arrow.thumbnail-next').addClass('disabled');
 			} else if(slideId == 1) {
 				$('.preview-control-arrow.prev').addClass('disabled');
 				$('.thumbnail-control-arrow.thumbnail-prev').addClass('disabled');
