@@ -56,7 +56,7 @@ body {
 main {
 	width: 100%;
 	margin: 0 auto;
-	padding: 0;
+	padding: 0 0 40px;
 }
 /* [END] General Rules */
 
@@ -172,26 +172,25 @@ header .search-header input {
 	vertical-align: middle;
 	box-sizing: border-box;
 }
-.gallery-preview img.image-shown {
-	width: 100%;
-	border: 0 solid transparent;
-	box-sizing: border-box;
-}
-.gallery-preview .image-shown:after {
+/*.gallery-preview .image-shown:after {
 	content: '\A';
     position: absolute;
     width: 100%; 
     height: 100%;
     top: 0; 
     left: 0;
-    /*background: rgba(0, 0, 0, 0.3);*/
-    transition: all 0.5s;
-    -webkit-transition: all 0.5s;
+    background: rgba(0, 0, 0, 1);
+    transition: all 0.5s ease;
+    -webkit-transition: all 0.5s ease;
+    opacity: 1;
 }
-.gallery-preview .image-shown:hover:after {
+.swipe:hover .image-shown:after {
 	opacity: 0;
-}
+}*/
 .gallery-preview .image-shown {
+	width: 100%;
+	border: 0 solid transparent;
+	box-sizing: border-box;
 	display: inline-block;
 	opacity: 1;
 }
@@ -203,8 +202,6 @@ header .search-header input {
     top: 0; 
     left: 0;
     background: rgba(0, 0, 0, 0.3);
-    transition: all 0.5s;
-    -webkit-transition: all 0.5s;
 }
 .gallery-preview .slide-image:after:hover {
 	opacity: 0;
@@ -216,6 +213,8 @@ header .search-header input {
 .gallery-preview .slide-image {
 	display: inline-block;
 	opacity: 1;
+    transition: background-color 0.5s ease;
+    -webkit-transition: background-color 0.5s ease;
 }
 .gallery-preview-container {
 	width: 50%;
@@ -263,7 +262,7 @@ header .search-header input {
 .show-thumbnails .btn-show {
 	text-transform: uppercase;
 	display: inline-block;
-	padding: 10px 15px;
+	padding: 7px 15px;
 	color: #fff;
 	font-size: 12px;
 	font-weight: 400;
@@ -355,16 +354,71 @@ header .search-header input {
 .thumbnail.current:after {
 	opacity: 0;
 }
-/* [END] Carousel Thumbnails Rules */
 .gallery-container .disabled {
 	display: none;
 }
-/*
-@media screen and (max-width: 1023px) {
-	.gallery-preview-container {
-		width: 100%;
-	}
-}*/
+/* [END] Carousel Thumbnails Rules */
+/**
+ * Categories Boxes Rules
+ */
+.categories {
+	text-shadow: none;
+	text-align: left;
+	font-size: 1.05vw;
+	color: #fff;
+}
+.categories ul {
+	list-style-type: none;
+	margin: 0 15px;
+	padding: 0;
+	box-sizing: border-box;
+}
+.categories ul li {
+	width: 50%;
+	padding: 0 15px;
+	box-sizing: border-box;
+	float: left;
+}
+.categories ul li .box.check-icon:before {
+	content: url("../images/common/check_icon.png");
+	max-width: 100%;
+	float: left;
+	margin-right: 20px;
+	margin-top: 15px;
+	padding-left: 40px;
+}
+.categories ul li .box.stars-icon:before {
+	content: url("../images/common/sparkle_icon.png");
+	max-width: 100%;
+	float: left;
+	margin-right: 20px;
+	margin-top: 15px;
+	padding-left: 40px;
+}
+.categories ul li .box {
+	width: 100%;
+	padding: 20px;
+	box-sizing: border-box;
+	-moz-border-radius: 5px;
+	-o-border-radius: 5px;
+	-webkit-border-radius: 5px;
+	border-radius: 5px;
+	background: #0066a1;
+	transition: all 0.5s ease;
+}
+.categories ul li .box:hover {
+	background: #002260;
+}
+.categories h2, 
+.categories p {
+	font-weight: 400;
+	letter-spacing: 2px;
+}
+.color-light-blue {
+	color: #44aae5;
+}
+/* [END] Categories Boxes Rules */
+
 @media screen and (max-width: 1023px) {
 	.gallery-preview-container {
 		width: 100%;
@@ -374,5 +428,9 @@ header .search-header input {
 		margin-right: 0;
 		border-left: 0 solid transparent!important;
 		border-right: 0 solid transparent!important;
+	}
+	.categories ul li {
+		width: 100%;
+		padding: 15px;
 	}
 }

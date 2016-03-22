@@ -70,7 +70,11 @@ function setSliderCarouselMaxHeight(carouselImgs, previewControlArrow) {
 	});
 	carouselImgs.each(function() {
 		var topSpace = Math.round((maxHeight - $(this).height())/divider);
-		$(this).css('margin-top', topSpace);
+		$(this).animate({
+			'margin-top': topSpace
+		}, 100, function() {
+			$(this).css('margin-top', topSpace);
+		});
 		
 		if($(this).width() > $(window).width()) {
 			var remainingWidth: number = ($(this).width() - $(window).width());
@@ -126,10 +130,41 @@ function controlPanel() {
 	/**
 	 * Init Tumbnail Navigation
 	 **/
-	initThumbnailNavigation($('.thumbnail'), shownClass, hiddenClass, galleryPreviewImg, effectStyle);
+	initThumbnailNavigation($('.thumbnail-next, .thumbnail-prev'), $('.thumbnail'), shownClass, hiddenClass, galleryPreviewImg, effectStyle);
 
+
+	/**
+	 * Display the image having class .image-shown in the middle of the Window
+	 **/
+	initVisibleSliderImage();
+
+	$(window).on('resize', function() {
+		/**
+		 * Display the image having class .image-shown in the middle of the Window
+		 **/
+		initVisibleSliderImage();
+	});
+
+	/** ################################################################################################################################### **/
 
 	/** Function Definitions ***/
+
+	/**
+	 * Display the image having class .image-shown in the middle of the Window
+	 **/
+	function initVisibleSliderImage() {
+		var visibleImage:any = $('.'+shownClass);
+		var carouselImgsContainer:any = $('.gallery-preview');
+		var slideImage:any   = $('.slide-image');
+		var counter:number = parseInt($('.'+shownClass).attr('id').match(/[0-9 -()+]+$/)[0])-1;
+		var spaceLeft:number = Math.round(slideImage.width()*counter);
+		
+		spaceLeft = spaceLeft + parseInt(slideImage.css('border-left-width'))*2;
+		
+		carouselImgsContainer.css({
+			'margin-left': -spaceLeft + 'px'
+		});
+	}
 
 
 	/**
@@ -192,12 +227,27 @@ function controlPanel() {
 	 * @param: carouselImgs - object, all img tags contained in the given carousel; Can be: $('.gallery-preview > img')
 	 * @param: effect 	    - boolean, slide the images with a fadeIn/fadeOut effect
 	 **/
-	function initThumbnailNavigation(thumbnail, shown, hidden, carouselImgs, effect) {
-		var thumbnail:any    = $(thumbnail),
-		    carouselImgs:any = $(carouselImgs);
+	function initThumbnailNavigation(button, thumbnail, shown, hidden, carouselImgs, effect) {
+		var thumbnail: any    = $(thumbnail),
+		    carouselImgs: any = $(carouselImgs),
+		    button: any      = $(button);
 
 		// Reset fadeIn Effect Style, if effect is slideHorizontal
 		resetFadeInEffectStyle(effect, carouselImgs, hidden);
+
+		$('.thumbnail-next').on('click', function(e) {
+			if(!$('.next').hasClass('disabled')) {
+				$('.next').trigger('click');
+			}
+			e.preventDefault();
+		});
+
+		$('.thumbnail-prev').on('click', function(e) {
+			if(!$('.prev').hasClass('disabled')) {
+				$('.prev').trigger('click');
+			}
+			e.preventDefault();
+		});
 		
 		thumbnail.on('click', function() {
 			var thumbnail 		   = $(this),
@@ -259,28 +309,22 @@ function controlPanel() {
 			var imageWidth = $('.gallery-preview-container').innerWidth();
 
 			currentActiveImage.removeClass(shown).addClass('slide-image');
-			nextActiveImage.addClass(shown);
-			
+			nextActiveImage.addClass(shown).removeClass('slide-image');
+	
 			counter = parseInt($('.'+shown).attr('id').match(/[0-9 -()+]+$/)[0])-1;
 			
-			
-			// carouselImgs.css('margin-left', 0);
 			carouselImgs.parent().animate({
-			  	marginLeft: '-'+$('.'+shown).outerWidth()*counter,
-			  	marginTop: 0
-			}, 500);
-			
-			var imageWidth = $('.gallery-preview-container').innerWidth();
-			$('.slide-image').css('width', Math.round(imageWidth - imageWidth/3));
-			$('.'+shown).css('width', Math.round(imageWidth));
+			  	marginLeft: '-'+$('.'+shown).outerWidth()*counter
+			}, 'medium');
 
-			setSliderCarouselMaxHeight($('.gallery-preview > img'), $('.gallery-container .preview-control-arrow'));
+			nextActiveImage.animate({
+				'width': Math.round(imageWidth),
+				'margin-top': 0
+			}, 'medium');
 
-			$(window).on('resize', function() {
-				var imageWidth = $('.gallery-preview-container').innerWidth();
-				$('.slide-image').css('width', Math.round(imageWidth - imageWidth/3));
-				$('.'+shown).css('width', Math.round(imageWidth));
-
+			currentActiveImage.animate({
+				'width': Math.round(imageWidth - imageWidth/3)
+			}, 'medium', function() {
 				setSliderCarouselMaxHeight($('.gallery-preview > img'), $('.gallery-container .preview-control-arrow'));
 			});
 		} else {
@@ -288,11 +332,6 @@ function controlPanel() {
 			nextActiveImage.addClass(shown).removeClass(hidden).css({'z-index': 20});
 			carouselImgs.not([currentActiveImage,nextActiveImage]).css({'z-index': 1});
 		}
-
-		// $('.swipe').animate({
-		// 	opacity: 1
-		// }, 500);
-
 		if(button != false) {
 			$('.preview-control-arrow').removeClass('disabled');
 			if(nextActiveImage.length > 0) {
@@ -321,12 +360,15 @@ function controlPanel() {
 		var slideId = parseInt(shownImage.attr('id').match(/[0-9 -()+]+$/)[0]);
 			
 		$('.preview-control-arrow').removeClass('disabled');
+		$('.thumbnail-control-arrow').removeClass('disabled');
 
 		if(slideId) {	
 			if($('.gallery-thumbnail-list .thumbnail').length == slideId) {
 				$('.preview-control-arrow.next').addClass('disabled');
+				// $('.thumbnail-control-arrow.thumbnail-next').addClass('disabled');
 			} else if(slideId == 1) {
 				$('.preview-control-arrow.prev').addClass('disabled');
+				$('.thumbnail-control-arrow.thumbnail-prev').addClass('disabled');
 			}
 		}
 	}
