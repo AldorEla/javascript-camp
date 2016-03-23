@@ -129,6 +129,12 @@ function controlPanel() {
          **/
         initVisibleSliderImage();
     });
+    $(window).on('load', function () {
+        /**
+         * Display the image having class .image-shown in the middle of the Window
+         **/
+        initVisibleSliderImage();
+    });
     /** ################################################################################################################################### **/
     /** Function Definitions ***/
     /**
@@ -167,6 +173,8 @@ function controlPanel() {
         // Reset fadeIn Effect Style, if effect is slideHorizontal
         resetFadeInEffectStyle(effect, carouselImgs, hidden);
         button.on('click', function (e) {
+            // Reset fadeIn Effect Style, if effect is slideHorizontal
+            resetFadeInEffectStyle(effect, carouselImgs, hidden);
             var button = $(this), currentActiveImage = $('.' + shown);
             if ($(this).hasClass('next')) {
                 var nextActiveImage = currentActiveImage.next(), button = $('.next');
@@ -192,18 +200,48 @@ function controlPanel() {
      * @param: effect 	    - boolean, slide the images with a fadeIn/fadeOut effect
      **/
     function initThumbnailNavigation(button, thumbnail, shown, hidden, carouselImgs, effect) {
-        var thumbnail = $(thumbnail), carouselImgs = $(carouselImgs), button = $(button);
+        var thumbnail = $(thumbnail), carouselImgs = $(carouselImgs), button = $(button), divider = 2;
         // Reset fadeIn Effect Style, if effect is slideHorizontal
         resetFadeInEffectStyle(effect, carouselImgs, hidden);
         $('.thumbnail-next').on('click', function (e) {
             if (!$('.next').hasClass('disabled')) {
                 $('.next').trigger('click');
             }
+            var thumbnailsTotalWidth = Math.round((($('.thumbnail.current > img').width() + 10 +
+                (parseInt($('.thumbnail').css('border-left-width'))) * divider)) *
+                carouselImgs.length);
+            if (thumbnailsTotalWidth > $(window).width()) {
+                $('.gallery-thumbnail-list').css({
+                    'width': thumbnailsTotalWidth
+                });
+                // Set leftMargin if the total width of the thumbnails is greater than window's width
+                var thumnailsLeftSpace = 0;
+                var slideId = parseInt($('.' + shownClass).attr('id').match(/[0-9 -()+]+$/)[0]) - 1;
+                thumnailsLeftSpace = Math.round(($('.thumbnail.current > img').width() + 10) * slideId);
+                $('.gallery-thumbnail-list').animate({
+                    'margin-left': -thumnailsLeftSpace + 'px'
+                });
+            }
             e.preventDefault();
         });
         $('.thumbnail-prev').on('click', function (e) {
             if (!$('.prev').hasClass('disabled')) {
                 $('.prev').trigger('click');
+            }
+            var thumbnailsTotalWidth = Math.round((($('.thumbnail.current > img').width() + 10 +
+                (parseInt($('.thumbnail').css('border-left-width'))) * divider)) *
+                carouselImgs.length);
+            if (thumbnailsTotalWidth > $(window).width()) {
+                $('.gallery-thumbnail-list').css({
+                    'width': thumbnailsTotalWidth
+                });
+                // Set leftMargin if the total width of the thumbnails is greater than window's width
+                var thumnailsLeftSpace = 0;
+                var slideId = parseInt($('.' + shownClass).attr('id').match(/[0-9 -()+]+$/)[0]) - 1;
+                thumnailsLeftSpace = Math.round(($('.thumbnail.current > img').width() + 10) * slideId);
+                $('.gallery-thumbnail-list').animate({
+                    'margin-left': -thumnailsLeftSpace + 'px'
+                });
             }
             e.preventDefault();
         });
@@ -244,7 +282,6 @@ function controlPanel() {
      * @param: effect 	    	  - boolean, slide the images with a fadeIn/fadeOut effect
      **/
     function setRelatedPreview(button, currentActiveImage, nextActiveImage, carouselImgs, shown, hidden, effect) {
-        // effect = 'fadeIn';
         if (effect == 'fadeIn') {
             currentActiveImage.animate({
                 opacity: 0.5
@@ -327,16 +364,34 @@ function controlPanel() {
                 'width': Math.round($(window).width() * carouselImgs.length)
             });
             $(window).on('load', function () {
-                var thumbnailsTotalWidth = Math.round((($('.thumbnail.current > img').width() + 5 +
+                var thumbnailsTotalWidth = Math.round((($('.thumbnail.current > img').width() + 10 +
                     (parseInt($('.thumbnail').css('border-left-width'))) * divider)) *
                     carouselImgs.length);
                 $('.gallery-thumbnail-list').css({
                     'width': thumbnailsTotalWidth
                 });
-                if (thumbnailsTotalWidth > $(window).width() && $(window) < maxMobileResolution) {
+                if (thumbnailsTotalWidth > $(window).width()) {
                     // Set leftMargin if the total width of the thumbnails is greater than window's width
                     var thumnailsLeftSpace = 0;
-                    thumnailsLeftSpace = $('.thumbnail.current').width() * parseInt($('.' + shownClass).attr('id').match(/[0-9 -()+]+$/)[0]);
+                    var slideId = parseInt($('.' + shownClass).attr('id').match(/[0-9 -()+]+$/)[0]) - 1;
+                    thumnailsLeftSpace = Math.round(($('.thumbnail.current > img').width() + 10) * slideId);
+                    $('.gallery-thumbnail-list').css({
+                        'margin-left': -thumnailsLeftSpace + 'px'
+                    });
+                }
+            });
+            $(window).on('resize', function () {
+                var thumbnailsTotalWidth = Math.round((($('.thumbnail.current > img').width() + 10 +
+                    (parseInt($('.thumbnail').css('border-left-width'))) * divider)) *
+                    carouselImgs.length);
+                $('.gallery-thumbnail-list').css({
+                    'width': thumbnailsTotalWidth
+                });
+                if (thumbnailsTotalWidth > $(window).width()) {
+                    // Set leftMargin if the total width of the thumbnails is greater than window's width
+                    var thumnailsLeftSpace = 0;
+                    var slideId = parseInt($('.' + shownClass).attr('id').match(/[0-9 -()+]+$/)[0]) - 1;
+                    thumnailsLeftSpace = Math.round(($('.thumbnail.current > img').width() + 10) * slideId);
                     $('.gallery-thumbnail-list').css({
                         'margin-left': -thumnailsLeftSpace + 'px'
                     });
@@ -349,6 +404,12 @@ function controlPanel() {
             carouselImgs.each(function () {
                 var imageWidth = Math.round($('.gallery-preview-container').innerWidth());
                 var slideImageWidth = Math.round(imageWidth - imageWidth / 3);
+                if ($(window).width() >= maxMobileResolution) {
+                    $('.gallery-preview-container').css('width', imageWidth);
+                }
+                else {
+                    $('.gallery-preview-container').css('width', 'auto');
+                }
                 $(this).css({
                     'float': 'left',
                     'border-left': borderStyle,
@@ -360,10 +421,17 @@ function controlPanel() {
                 $('.' + shownClass).css('width', imageWidth);
                 $('.slide-image').css('width', slideImageWidth);
             });
+            setSliderCarouselMaxHeight($('.gallery-preview > img'), $('.gallery-container .preview-control-arrow'));
             $(window).on('resize', function () {
                 carouselImgs.each(function () {
                     var imageWidth = Math.round($('.gallery-preview-container').innerWidth());
                     var slideImageWidth = Math.round(imageWidth - imageWidth / 3);
+                    if ($(window).width() >= maxMobileResolution) {
+                        $('.gallery-preview-container').css('width', imageWidth);
+                    }
+                    else {
+                        $('.gallery-preview-container').css('width', 'auto');
+                    }
                     $(this).css({
                         'float': 'left',
                         'border-left': borderStyle,

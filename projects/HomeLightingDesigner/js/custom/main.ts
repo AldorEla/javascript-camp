@@ -160,6 +160,13 @@ function controlPanel() {
 		initVisibleSliderImage();
 	});
 
+	$(window).on('load', function() {
+		/**
+		 * Display the image having class .image-shown in the middle of the Window
+		 **/
+		initVisibleSliderImage();
+	});
+
 	/** ################################################################################################################################### **/
 
 	/** Function Definitions ***/
@@ -209,6 +216,9 @@ function controlPanel() {
 		resetFadeInEffectStyle(effect, carouselImgs, hidden);
 
 		button.on('click', function(e) {
+			// Reset fadeIn Effect Style, if effect is slideHorizontal
+			resetFadeInEffectStyle(effect, carouselImgs, hidden);
+
 			var button 			   = $(this),
 			    currentActiveImage = $('.'+shown);
 			
@@ -244,7 +254,8 @@ function controlPanel() {
 	function initThumbnailNavigation(button, thumbnail, shown, hidden, carouselImgs, effect) {
 		var thumbnail: any    = $(thumbnail),
 		    carouselImgs: any = $(carouselImgs),
-		    button: any      = $(button);
+		    button: any       = $(button),
+		    divider: number   = 2;
 
 		// Reset fadeIn Effect Style, if effect is slideHorizontal
 		resetFadeInEffectStyle(effect, carouselImgs, hidden);
@@ -253,6 +264,28 @@ function controlPanel() {
 			if(!$('.next').hasClass('disabled')) {
 				$('.next').trigger('click');
 			}
+
+
+			var thumbnailsTotalWidth:number = Math.round((($('.thumbnail.current > img').width()+10+
+												 (parseInt($('.thumbnail').css('border-left-width')))*divider))*
+												carouselImgs.length);
+			if(thumbnailsTotalWidth > $(window).width()) {
+				$('.gallery-thumbnail-list').css({
+					'width': thumbnailsTotalWidth
+				});
+
+				// Set leftMargin if the total width of the thumbnails is greater than window's width
+				var thumnailsLeftSpace:number = 0;
+				var slideId:number = parseInt($('.'+shownClass).attr('id').match(/[0-9 -()+]+$/)[0])-1;
+
+				thumnailsLeftSpace = Math.round(($('.thumbnail.current > img').width()+10)*slideId);
+
+				$('.gallery-thumbnail-list').animate({
+					'margin-left': -thumnailsLeftSpace+'px'
+				});
+			}
+
+
 			e.preventDefault();
 		});
 
@@ -260,6 +293,28 @@ function controlPanel() {
 			if(!$('.prev').hasClass('disabled')) {
 				$('.prev').trigger('click');
 			}
+
+
+			var thumbnailsTotalWidth:number = Math.round((($('.thumbnail.current > img').width()+10+
+												 (parseInt($('.thumbnail').css('border-left-width')))*divider))*
+												carouselImgs.length);
+			if(thumbnailsTotalWidth > $(window).width()) {
+				$('.gallery-thumbnail-list').css({
+					'width': thumbnailsTotalWidth
+				});
+
+				// Set leftMargin if the total width of the thumbnails is greater than window's width
+				var thumnailsLeftSpace:number = 0;
+				var slideId:number = parseInt($('.'+shownClass).attr('id').match(/[0-9 -()+]+$/)[0])-1;
+
+				thumnailsLeftSpace = Math.round(($('.thumbnail.current > img').width()+10)*slideId);
+
+				$('.gallery-thumbnail-list').animate({
+					'margin-left': -thumnailsLeftSpace+'px'
+				});
+			}
+
+
 			e.preventDefault();
 		});
 		
@@ -307,7 +362,6 @@ function controlPanel() {
 	 * @param: effect 	    	  - boolean, slide the images with a fadeIn/fadeOut effect
 	 **/
 	function setRelatedPreview(button, currentActiveImage, nextActiveImage, carouselImgs, shown, hidden, effect) {
-		// effect = 'fadeIn';
 		if(effect == 'fadeIn') {
 			currentActiveImage.animate({
 			  	opacity: 0.5
@@ -346,6 +400,7 @@ function controlPanel() {
 			nextActiveImage.addClass(shown).removeClass(hidden).css({'z-index': 20});
 			carouselImgs.not([currentActiveImage,nextActiveImage]).css({'z-index': 1});
 		}
+
 		if(button != false) {
 			$('.preview-control-arrow').removeClass('disabled');
 			if(nextActiveImage.length > 0) {
@@ -405,17 +460,39 @@ function controlPanel() {
 			});
 
 			$(window).on('load', function() {
-				var thumbnailsTotalWidth:number = Math.round((($('.thumbnail.current > img').width()+5+
+				var thumbnailsTotalWidth:number = Math.round((($('.thumbnail.current > img').width()+10+
 													 (parseInt($('.thumbnail').css('border-left-width')))*divider))*
 													carouselImgs.length);
 				$('.gallery-thumbnail-list').css({
 					'width': thumbnailsTotalWidth
 				});
-				if(thumbnailsTotalWidth > $(window).width() && $(window) < maxMobileResolution) {
+				if(thumbnailsTotalWidth > $(window).width()) {
 					// Set leftMargin if the total width of the thumbnails is greater than window's width
 					var thumnailsLeftSpace:number = 0;
+					var slideId:number = parseInt($('.'+shownClass).attr('id').match(/[0-9 -()+]+$/)[0])-1;
 
-					thumnailsLeftSpace = $('.thumbnail.current').width()*parseInt($('.'+shownClass).attr('id').match(/[0-9 -()+]+$/)[0]);
+					thumnailsLeftSpace = Math.round(($('.thumbnail.current > img').width()+10)*slideId);
+
+					$('.gallery-thumbnail-list').css({
+						'margin-left': -thumnailsLeftSpace+'px'
+					})
+				}
+			});
+
+			$(window).on('resize', function() {
+				var thumbnailsTotalWidth:number = Math.round((($('.thumbnail.current > img').width()+10+
+													 (parseInt($('.thumbnail').css('border-left-width')))*divider))*
+													carouselImgs.length);
+				$('.gallery-thumbnail-list').css({
+					'width': thumbnailsTotalWidth
+				});
+				
+				if(thumbnailsTotalWidth > $(window).width()) {
+					// Set leftMargin if the total width of the thumbnails is greater than window's width
+					var thumnailsLeftSpace:number = 0;
+					var slideId:number = parseInt($('.'+shownClass).attr('id').match(/[0-9 -()+]+$/)[0])-1;
+
+					thumnailsLeftSpace = Math.round(($('.thumbnail.current > img').width()+10)*slideId);
 
 					$('.gallery-thumbnail-list').css({
 						'margin-left': -thumnailsLeftSpace+'px'
@@ -433,6 +510,12 @@ function controlPanel() {
 				var imageWidth = Math.round($('.gallery-preview-container').innerWidth());
 				var slideImageWidth = Math.round(imageWidth - imageWidth/3);
 
+				if($(window).width() >= maxMobileResolution) {
+					$('.gallery-preview-container').css('width', imageWidth);
+				} else {
+					$('.gallery-preview-container').css('width', 'auto');
+				}
+
 				$(this).css({
 					'float': 'left',
 					'border-left': borderStyle,
@@ -445,10 +528,18 @@ function controlPanel() {
 				$('.slide-image').css('width', slideImageWidth);
 			});
 
+			setSliderCarouselMaxHeight($('.gallery-preview > img'), $('.gallery-container .preview-control-arrow'));
+
 			$(window).on('resize', function() {
 				carouselImgs.each(function() {
 					var imageWidth = Math.round($('.gallery-preview-container').innerWidth());
 					var slideImageWidth = Math.round(imageWidth - imageWidth/3);
+
+					if($(window).width() >= maxMobileResolution) {
+						$('.gallery-preview-container').css('width', imageWidth);
+					} else {
+						$('.gallery-preview-container').css('width', 'auto');
+					}
 
 					$(this).css({
 						'float': 'left',
@@ -491,7 +582,7 @@ function showThumbnails() {
 function closeAside() {
 	var showAsideBtn: any = $('.js-toggle-aside');
 	var openClass: string = 'expanded';
-	var asideElem = $('aside');
+	var asideElem: any = $('aside');
 
 	$(showAsideBtn).unbind().on('click', function(e) {
 		if(asideElem.hasClass(openClass)) {
